@@ -27,19 +27,26 @@ class Feedback extends Component {
 
    render() {
       return (
-         <View style = {styles.container}>
-            <TextInput style={styles.feedbackInput}
+         <View style={styles.container} accessible={true}>
+            <Text style={{margin: 15}}>
+               We'd love to hear your feedback on how to make our app more accessible. Fill out the box below and hit enter to shoot us an email!
+            </Text>
+            <TextInput
+               accessibilityLabel="Feedback Text Box" style={styles.feedbackInput}
+               accessibilityHint="Type feedback and hit enter on keyboard to submit in email app"
                underlineColorAndroid="transparent"
                multiline={true}
                placeholder="Type your feedback here!"
                placeholderTextColor="#9a73ef"
                autoCapitalize="none"
                onChangeText={this.handleFeedback}
-               autoFocus={true}
+               autoFocus={false}
                onKeyPress={this.handleKeyPress}
                />
 
             <TouchableOpacity
+               accessibilityLabel="Submit"
+               accessibilityHint="Switch to Email and send feedback - just hit send"
                style = {styles.submitButton}
                onPress = {
                   () => this.submit('piercephillips22@yahoo.com', this.state.feedback)
@@ -58,10 +65,10 @@ const styles = StyleSheet.create({
    },
    feedbackInput: {
       margin: 15,
-      height: '75%',
+      height: '60%',
       width: '90%',
       borderColor: '#7a42f4',
-      borderWidth: 2
+      borderWidth: 3
    },
    submitButton: {
       backgroundColor: '#7a42f4',
