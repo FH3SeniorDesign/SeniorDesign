@@ -5,6 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Feedback from './components/feedback';
 import ModelTest from './components/model-test';
+import FeatureTest from './components/feature-test'
+import CameraTest from './components/camera'
+import CameraJS from './components/camerajs'
 import { SafeAreaView } from 'react-native-safe-area-context';
 // import Home from './components/home';
 
@@ -17,6 +20,8 @@ const App = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Feedback" component={Feedback} />
         <Stack.Screen name="Model" component={ModelTest} />
+        <Stack.Screen name="Feature Tests" component={FeatureTest} />
+        <Stack.Screen name="Camera Test" component={CameraJS} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -38,6 +43,18 @@ const Home = ({navigation} : {navigation: any}) => {
             onPress = {() => navigation.navigate('Feedback') 
             }>
             <Text style={{color: 'white'}}>Submit Feedback</Text>
+          </TouchableOpacity>    
+          <TouchableOpacity
+            style = {styles.featureButton}
+            onPress = {() => navigation.navigate('Feature Tests') 
+            }>
+            <Text style={{color: 'black'}}>Test Features</Text>
+          </TouchableOpacity>    
+          <TouchableOpacity
+            style = {styles.cameraButton}
+            onPress = {() => navigation.navigate('Camera Test') 
+            }>
+            <Text style={{color: 'white'}}>Test Camera</Text>
           </TouchableOpacity>    
       </SafeAreaView>
     );
@@ -63,6 +80,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         //bottom: 0,
         backgroundColor: '#FFE433',
+        padding: 10,
+    },
+    featureButton: {
+        //position: 'absolute',
+        width: '100%',
+        height: '20%',
+        justifyContent: 'center',
+        //bottom: 0,
+        backgroundColor: '#58FF33',
+        padding: 10,
+    },
+    cameraButton: {
+        //position: 'absolute',
+        width: '100%',
+        height: '20%',
+        justifyContent: 'center',
+        //bottom: 0,
+        backgroundColor: '#CB0D0D',
         padding: 10,
     }
 })
