@@ -18,7 +18,7 @@ import {
 // Tutorial here: https://reactnativemaster.com/react-native-camera-expo-example
 // Code from here https://github.com/Alhydra/react-native-camera-expo-exmple/blob/master/App.js
 
-// small change here!
+// small change here! testing for
 
 export default class App extends React.Component {
   state = {
