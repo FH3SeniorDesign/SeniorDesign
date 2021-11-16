@@ -32,7 +32,9 @@ export class ModelTest extends React.Component<IState> {
 
     // Signal to the app that tensorflow.js can now be used.
     this.setState({isTfReady: true});
-    const model = await tf.loadGraphModel(bundleResourceIO(modelJSON, modelWeights)).then((promise) => {
+    const resources = bundleResourceIO(modelJSON, modelWeights);
+    console.log(resources);
+    const model = await tf.loadLayersModel("https://raw.githubusercontent.com/FH3SeniorDesign/SeniorDesign/riskreduction-pierce/riskReductionDemo/model/model-resnet-full/model.json").then((promise) => {
       console.log('model ready');
     }).catch((error) => {
       console.log('model failed to initialize: ' + error); 
