@@ -27,11 +27,13 @@ class Feedback extends Component {
 
    render() {
       return (
-         <View style={styles.container} accessible={true}>
-            <Text style={{margin: 15}}>
+         <View style={styles.container}>
+            <Text 
+               style={{margin: 15, fontSize: 15}} accessible={true}>
                We'd love to hear your feedback on how to make our app more accessible. Fill out the box below and hit enter to shoot us an email!
             </Text>
-            <TextInput
+            <TextInput 
+               accessible={true}
                accessibilityLabel="Feedback Text Box" style={styles.feedbackInput}
                accessibilityHint="Type feedback and hit enter on keyboard to submit in email app"
                underlineColorAndroid="transparent"
@@ -45,8 +47,9 @@ class Feedback extends Component {
                />
 
             <TouchableOpacity
-               accessibilityLabel="Submit"
-               accessibilityHint="Switch to Email and send feedback - just hit send"
+               accessible={true}
+               accessibilityLabel="Submit button"
+               accessibilityHint="Switch to Email application to create an email with all necessary fields automatically filled"
                style = {styles.submitButton}
                onPress = {
                   () => this.submit('piercephillips22@yahoo.com', this.state.feedback)
@@ -68,7 +71,8 @@ const styles = StyleSheet.create({
       height: '60%',
       width: '90%',
       borderColor: '#7a42f4',
-      borderWidth: 3
+      borderWidth: 3,
+      fontSize: 40
    },
    submitButton: {
       backgroundColor: '#7a42f4',
@@ -78,7 +82,8 @@ const styles = StyleSheet.create({
       width: '90%',
    },
    submitButtonText:{
-      color: 'white'
+      color: 'white',
+      fontSize: 40,
    }
 })
 

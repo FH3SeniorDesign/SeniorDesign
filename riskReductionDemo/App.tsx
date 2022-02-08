@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Feedback from './components/feedback';
-import ModelTest from './components/model-test';
+//import ModelTest from './components/model-test';
+import ModelTest from './components/model-js';
 import FeatureTest from './components/feature-test'
 import CameraTest from './components/camera'
 import CameraJS from './components/camerajs'

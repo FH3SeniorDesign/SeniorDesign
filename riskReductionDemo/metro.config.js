@@ -10,7 +10,7 @@ module.exports = (async () => {
   return {
     resolver: {
       // Add bin to assetExts
-      assetExts: [...assetExts, 'bin', 'json', 'wav'],
+      assetExts: [...assetExts, 'bin', 'json', 'wav', 'jpeg', 'JPEG'],
     }
   };
 })();
