@@ -19,4 +19,6 @@ module.exports = {
       lines: 90,
     },
   },
+  // Reference: https://github.com/facebook/react-native/issues/31190
+  transformIgnorePatterns: ['node_modules/(?!(@react-native|react-native.*)/)'],
 };

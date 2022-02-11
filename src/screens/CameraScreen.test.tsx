@@ -1,6 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {render, waitFor} from '@testing-library/react-native';
+import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import * as React from 'react';
 import {
   Camera,
@@ -45,13 +45,15 @@ describe('CameraScreen', () => {
       external: undefined,
     });
 
-    const {queryByText} = render(component);
+    const {queryByText, getByA11yLabel} = render(component);
     const nullCameraError = queryByText(
       'No camera found! Please use a device with camera support!',
     );
+    const takePictureButton = getByA11yLabel('Take Picture Button');
 
     expect(mockUseCameraDevices).toHaveBeenCalled();
     expect(nullCameraError).toBeNull();
+    fireEvent(takePictureButton, 'press');
   });
 
   test('renders null camera', () => {

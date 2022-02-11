@@ -9,6 +9,7 @@ import {View} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Camera, CameraPermissionStatus} from 'react-native-vision-camera';
 import {RootStackParamList} from 'RootStackParamList';
+import {ImagePreviewScreen} from 'screens/ImagePreviewScreen';
 
 export const App = (): JSX.Element => {
   console.log('## Rendering App');
@@ -43,6 +44,10 @@ export const App = (): JSX.Element => {
             component={PermissionsScreen}
           />
           <Stack.Screen name="CameraScreen" component={CameraScreen} />
+          <Stack.Screen
+            name="ImagePreviewScreen"
+            component={ImagePreviewScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

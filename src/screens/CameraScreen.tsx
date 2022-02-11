@@ -1,12 +1,14 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/CameraPage.tsx
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {TakePictureButton} from 'components/TakePictureButton';
 import * as React from 'react';
-import {useEffect} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {useCallback, useEffect, useRef} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   Camera,
   CameraPermissionStatus,
+  PhotoFile,
   useCameraDevices,
 } from 'react-native-vision-camera';
 import {RootStackParamList} from 'RootStackParamList';
@@ -31,6 +33,14 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     verifyCameraPermission();
   }, [navigation]);
 
+  const previewPicture = useCallback(
+    (photoFile: PhotoFile) => {
+      console.log(`photoFile: ${JSON.stringify(photoFile)}`);
+      navigation.navigate('ImagePreviewScreen', {photoFile});
+    },
+    [navigation],
+  );
+  const cameraRef = useRef<Camera>(null);
   const devices = useCameraDevices();
   const device = devices.back;
 
@@ -43,19 +53,37 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   }
 
   return (
-    <Camera
-      style={StyleSheet.absoluteFill}
-      device={device}
-      isActive={true}
-      accessibilityLabel="Camera Screen"
-    />
+    <SafeAreaView style={styles.container} accessibilityLabel="Camera Screen">
+      <View style={StyleSheet.absoluteFill}>
+        <Camera
+          ref={cameraRef}
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={true}
+          photo={true}
+        />
+      </View>
+      <TakePictureButton
+        cameraRef={cameraRef}
+        flash="auto"
+        onPictureTaken={previewPicture}
+        accessibilityLabel="Take Picture Button"
+      />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 16,
-    marginHorizontal: 16,
+    backgroundColor: 'black',
+    // marginVertical: 16,
+    // marginHorizontal: 16,
+  },
+  captureButton: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 0,
+    // bottom: SAFE_AREA_PADDING.paddingBottom,
   },
 });
