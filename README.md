@@ -16,7 +16,7 @@ yarn start
 - In a new terminal tab, run the following command in the project directory to start the emulator:
 
 ```sh
-yarn run android
+yarn android
 ```
 
 ### iOS setup
@@ -32,16 +32,16 @@ yarn start
 - In a new terminal tab, run the following command in the project directory to start the emulator:
 
 ```sh
-yarn run ios
+yarn ios
 ```
 
 ## Commands
 
 - `yarn start`: start Metro Bundler
-- `yarn run android`: start Android emulator
-- `yarn run ios`: start iOS emulator
-- `yarn run test`: run unit tests
-- `yarn run lint`: lint code
+- `yarn android`: start Android emulator
+- `yarn ios`: start iOS emulator
+- `yarn test`: run unit tests
+- `yarn lint`: lint code
 
 For more information, refer to the `scripts` section of `package.json`.
 
