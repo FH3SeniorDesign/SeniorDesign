@@ -8,7 +8,7 @@ import { setStatusBarBackgroundColor } from 'expo-status-bar'
 
 export default function FeatureTest() {
     async function playSound() {
-        const sound = await Audio.Sound.createAsync(require('../assets/ding-dong.wav'));
+        const sound = await Audio.Sound.createAsync(require('../assets/audio/ding-dong.wav'));
         await sound.sound.playAsync();
     }
 
