@@ -1,9 +1,10 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/CameraPage.tsx
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {TakePictureButton} from 'components/TakePictureButton';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import * as React from 'react';
-import {useCallback, useEffect, useRef} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   Camera,
@@ -17,6 +18,9 @@ type Props = NativeStackScreenProps<RootStackParamList, 'CameraScreen'>;
 
 export const CameraScreen = ({navigation}: Props): JSX.Element => {
   console.log('## Rendering CameraScreen');
+
+  const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>('back');
+  const [flash, setFlash] = useState<'off' | 'on'>('off');
 
   useEffect(() => {
     const verifyCameraPermission = async () => {
@@ -40,9 +44,26 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     },
     [navigation],
   );
+
+  const flipCamera = useCallback(
+    () => {
+      setCameraPosition((p) => (p === 'back' ? 'front' : 'back'));
+      console.log('Flipping camera...');
+    },
+    [],
+  );
+
+  const toggleFlash = useCallback(() => {
+    setFlash((f) => (f === 'off' ? 'on' : 'off'));
+  }, []);
+
   const cameraRef = useRef<Camera>(null);
   const devices = useCameraDevices();
-  const device = devices.back;
+  const device = devices[cameraPosition];
+
+  // Check features supported by device
+  const supportsCameraFlipping = useMemo(() => devices.back != null && devices.front != null, [devices.back, devices.front]);
+  const supportsFlash = device?.hasFlash ?? false;
 
   if (device == null) {
     return (
@@ -63,12 +84,26 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
           photo={true}
         />
       </View>
-      <TakePictureButton
-        cameraRef={cameraRef}
-        flash="auto"
-        onPictureTaken={previewPicture}
-        accessibilityLabel="Take Picture Button"
-      />
+      <View style={styles.captureButton}>
+        <TakePictureButton
+          cameraRef={cameraRef}
+          flash={supportsFlash ? flash : 'off'}
+          onPictureTaken={previewPicture}
+          accessibilityLabel="Take Picture Button"
+        />
+      </View>
+      <View style={styles.rightButtonRow}>
+        {supportsCameraFlipping && (
+          <TouchableOpacity style={styles.button} onPress={flipCamera}>
+            <IonIcon name="camera-reverse" color="white" size={24} />
+          </TouchableOpacity>
+        )}
+        {supportsFlash && (
+          <TouchableOpacity style={styles.button} onPress={toggleFlash}>
+            <IonIcon name={flash === 'on' ? 'flash' : 'flash-off'} color="white" size={24} />
+          </TouchableOpacity>
+        )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -83,7 +118,23 @@ const styles = StyleSheet.create({
   captureButton: {
     position: 'absolute',
     alignSelf: 'center',
-    bottom: 0,
+    bottom: 20,
     // bottom: SAFE_AREA_PADDING.paddingBottom,
+  },
+  button: {
+    marginBottom: 15,
+    width: 40,
+    height: 40,
+    borderRadius: 40 / 2,
+    backgroundColor: 'rgba(140, 140, 140, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rightButtonRow: {
+    position: 'absolute',
+    // right: SAFE_AREA_PADDING.paddingRight,
+    // top: SAFE_AREA_PADDING.paddingTop,
+    right: 40,
+    bottom: 40,
   },
 });

@@ -7,7 +7,7 @@ import {Camera, PhotoFile, TakePhotoOptions} from 'react-native-vision-camera';
 
 type Props = {
   cameraRef: React.RefObject<Camera>;
-  flash: 'on' | 'off' | 'auto';
+  flash: 'on' | 'off';
   onPictureTaken: (photoFile: PhotoFile) => void;
   accessibilityLabel: string;
 };
@@ -18,7 +18,13 @@ export const TakePictureButton = ({
   onPictureTaken,
   accessibilityLabel,
 }: Props): JSX.Element => {
-  const takePhotoOptions = useMemo<TakePhotoOptions>(() => ({flash}), [flash]);
+  // const takePhotoOptions = useMemo<TakePhotoOptions>(() => ({flash}), [flash]);
+  const takePhotoOptions = useMemo<TakePhotoOptions>(
+    () => ({
+      flash: flash,
+    }),
+    [flash],
+  );
   const takePicture = useCallback(async () => {
     try {
       if (cameraRef.current == null) {
