@@ -2,15 +2,18 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {TakePictureButton} from 'components/TakePictureButton';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import 'react-native-reanimated';
 import {
   Camera,
   CameraPermissionStatus,
   PhotoFile,
   useCameraDevices,
+  useFrameProcessor,
 } from 'react-native-vision-camera';
 import {RootStackParamList} from 'RootStackParamList';
 
@@ -19,7 +22,9 @@ type Props = NativeStackScreenProps<RootStackParamList, 'CameraScreen'>;
 export const CameraScreen = ({navigation}: Props): JSX.Element => {
   console.log('## Rendering CameraScreen');
 
-  const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>('back');
+  const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
+    'back',
+  );
   const [flash, setFlash] = useState<'off' | 'on'>('off');
 
   useEffect(() => {
@@ -45,16 +50,13 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     [navigation],
   );
 
-  const flipCamera = useCallback(
-    () => {
-      setCameraPosition((p) => (p === 'back' ? 'front' : 'back'));
-      console.log('Flipping camera...');
-    },
-    [],
-  );
+  const flipCamera = useCallback(() => {
+    setCameraPosition(p => (p === 'back' ? 'front' : 'back'));
+    console.log('Flipping camera...');
+  }, []);
 
   const toggleFlash = useCallback(() => {
-    setFlash((f) => (f === 'off' ? 'on' : 'off'));
+    setFlash(f => (f === 'off' ? 'on' : 'off'));
   }, []);
 
   const cameraRef = useRef<Camera>(null);
@@ -62,8 +64,17 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   const device = devices[cameraPosition];
 
   // Check features supported by device
-  const supportsCameraFlipping = useMemo(() => devices.back != null && devices.front != null, [devices.back, devices.front]);
+  const supportsCameraFlipping = useMemo(
+    () => devices.back != null && devices.front != null,
+    [devices.back, devices.front],
+  );
   const supportsFlash = device?.hasFlash ?? false;
+
+  const frameProcessor = useFrameProcessor(frame => {
+    'worklet';
+    const res = scanImage(frame);
+    console.log(res);
+  }, []);
 
   if (device == null) {
     return (
@@ -82,6 +93,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
           device={device}
           isActive={true}
           photo={true}
+          frameProcessor={frameProcessor}
         />
       </View>
       <View style={styles.captureButton}>
@@ -100,7 +112,11 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
         )}
         {supportsFlash && (
           <TouchableOpacity style={styles.button} onPress={toggleFlash}>
-            <IonIcon name={flash === 'on' ? 'flash' : 'flash-off'} color="white" size={24} />
+            <IonIcon
+              name={flash === 'on' ? 'flash' : 'flash-off'}
+              color="white"
+              size={24}
+            />
           </TouchableOpacity>
         )}
       </View>
