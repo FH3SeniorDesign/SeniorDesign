@@ -107,6 +107,9 @@ export class ModelTest extends React.Component {
     console.log("fetching image...");
 
     const image = require('../assets/vizwiz_dark1.jpg');
+    // image.onload = function() {
+      // console.log(this.width + 'x' + this.height);
+    // }
     const imageAssetPath = Image.resolveAssetSource(image);
     const response = await fetch(imageAssetPath.uri, {}, { isBinary: true });
     console.log("converting image to tensor...")
@@ -129,8 +132,33 @@ export class ModelTest extends React.Component {
     console.log("grainy: ", array[0][4]);
     console.log("none: ", array[0][5]);
     console.log("other: ", array[0][6]);
+    
     });
+  }
 
+
+  async localPrediction() {
+    console.log("Hello!");
+    console.log("fetching image...");
+
+    const image = require('../assets/vizwiz_dark1.jpg');
+    // image.onload = function() {
+      // console.log(this.width + 'x' + this.height);
+    // }
+    const imageAssetPath = Image.resolveAssetSource(image);
+
+    console.log(imageAssetPath.width + " " + imageAssetPath.height);
+    const response = await fetch(imageAssetPath.uri, {}, { isBinary: true });
+    console.log("converting image to tensor...")
+    const imageDataArrayBuffer = await response.arrayBuffer();
+    const imageData = new Uint8Array(imageDataArrayBuffer);
+    
+    // console.log(imageData.length);
+
+    const imageTensor = decodeJpeg(imageData, 3);
+    console.log(imageTensor)
+    const imageTensorResized = tf.image.resizeBilinear(imageTensor, [448,448]);
+    const imageTensorNormalized = imageTensorResized.div(255.0)
   }
 
 
@@ -142,6 +170,9 @@ export class ModelTest extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={this.testSound}>
             <Text>Touch to give feedback</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.localPrediction}>
+            <Text>LocalFeedback</Text>
           </TouchableOpacity>
           <Text>{this.state.modelOutput}</Text>
         </View>
