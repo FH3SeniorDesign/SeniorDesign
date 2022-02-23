@@ -15,6 +15,7 @@ import androidx.camera.core.ImageProxy;
 import androidx.camera.core.internal.YuvToJpegProcessor;
 
 import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
 
 import org.tensorflow.lite.DataType;
@@ -79,12 +80,28 @@ public class ImageFrameProcessorPlugin extends FrameProcessorPlugin {
             tflite.runForMultipleInputsOutputs(new Object[] { tensorImage.getBuffer() }, indicesToOutputsMap);
         }
 
-        WritableNativeArray array = new WritableNativeArray();
-        for (double i : outBuf1[0]) {
-            array.pushDouble(i);
-        }
+        String distortionLabels[] = {"blurry", "shaky", "bright", "dark", "grainy", "none", "other"};
 
-        return array;
+        // convert to JSON
+        HashMap<String, Float> res = new HashMap<>();
+        for (float i : outBuf1[0]) {
+            res.put("global_quality", i);
+        }
+        for (int i = 0; i < outBuf0[0].length; i++) {
+            res.put(distortionLabels[i], outBuf0[0][i]);
+        }
+        WritableNativeMap map = new WritableNativeMap();
+        for (Map.Entry<String, Float> entry : res.entrySet()) {
+            map.putString(entry.getKey(), entry.getValue().toString());
+        }
+        return map;
+
+//        WritableNativeArray array = new WritableNativeArray();
+//        for (double i : outBuf1[0]) {
+//            array.pushDouble(i);
+//        }
+//
+//        return array;
     }
 
     // https://stackoverflow.com/a/58568495

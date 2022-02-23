@@ -2,7 +2,8 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import * as React from 'react';
 import {useMemo} from 'react';
-import {Image, ImageURISource, StyleSheet, View} from 'react-native';
+import {Image, ImageURISource, Platform, StyleSheet, View, PermissionsAndroid} from 'react-native';
+import CameraRoll from '@react-native-community/cameraroll'
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
@@ -19,9 +20,26 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   const discardImage = () => {
     navigation.replace('CameraScreen');
   };
-  const saveImage = () => {
-    // TODO save image to photo library
 
+  const hasAndroidPermissions = async (): Promise<boolean> => {
+    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+    const hasPermission = await PermissionsAndroid.check(permission);
+    if (hasPermission) {
+      return true;
+    }
+    const status = await PermissionsAndroid.request(permission);
+    return status === "granted";
+  }
+
+  const saveImage = async () => {
+    // TODO save image to photo library
+    if (Platform.OS === "android" && !(await hasAndroidPermissions())) {
+      console.log("No permission!")
+      return;
+    }
+
+    console.log("saving photo")
+    CameraRoll.save(`file://${photoFile.path}`).catch((reason: any) => console.log(reason));
     navigation.replace('CameraScreen');
   };
 
