@@ -5,7 +5,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Switch} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import {
@@ -25,6 +25,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   const [cameraPosition, setCameraPosition] = useState<'front' | 'back'>(
     'back',
   );
+  const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false); // enable/disable realtime feedback
   const [flash, setFlash] = useState<'off' | 'on'>('off');
 
   useEffect(() => {
@@ -58,6 +59,10 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   const toggleFlash = useCallback(() => {
     setFlash(f => (f === 'off' ? 'on' : 'off'));
   }, []);
+
+  const toggleRealtimeFeedback = useCallback(() => {
+    setFeedbackEnabled(feedbackEnabled => !feedbackEnabled);
+    }, []);
 
   const cameraRef = useRef<Camera>(null);
   const devices = useCameraDevices();
@@ -93,7 +98,8 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
           device={device}
           isActive={true}
           photo={true}
-          frameProcessor={frameProcessor}
+          enableZoomGesture={true}
+          frameProcessor={feedbackEnabled ? frameProcessor : undefined}
         />
       </View>
       <View style={styles.captureButton}>
@@ -119,6 +125,9 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
             />
           </TouchableOpacity>
         )}
+      </View>
+      <View style={styles.realtimeFeedbackSwitch}>
+        <Switch onValueChange={toggleRealtimeFeedback} value={feedbackEnabled}/>
       </View>
     </SafeAreaView>
   );
@@ -152,5 +161,11 @@ const styles = StyleSheet.create({
     // top: SAFE_AREA_PADDING.paddingTop,
     right: 40,
     bottom: 40,
+  },
+  realtimeFeedbackSwitch: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    backgroundColor: '#00000000',
   },
 });
