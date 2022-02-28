@@ -18,6 +18,8 @@ import {
 } from 'react-native-vision-camera';
 import {RootStackParamList} from 'RootStackParamList';
 
+const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
+
 type Props = NativeStackScreenProps<RootStackParamList, 'CameraScreen'>;
 
 export const CameraScreen = ({navigation}: Props): JSX.Element => {
@@ -74,7 +76,13 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   const getImageFromStorage = async () => {
     const res = await launchImageLibrary({mediaType: 'photo'})
     .then(res => {
-      // do something
+      if (!res.didCancel) {
+        let uri = res.assets![0].uri;
+        console.log(uri);
+        ImageProcessorPlugin.makePrediction(uri, (res: any) => {
+          console.log(res);
+        })
+      }
     })
     .catch(err => console.log("Error - ", err));
   };

@@ -2,11 +2,13 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import * as React from 'react';
 import {useMemo} from 'react';
-import {Image, ImageURISource, Platform, StyleSheet, View, PermissionsAndroid} from 'react-native';
+import {Image, ImageURISource, Platform, StyleSheet, View, PermissionsAndroid, NativeModules} from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll'
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
+
+const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 
@@ -14,6 +16,12 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   console.log('## Rendering ImagePreviewScreen');
 
   const {photoFile} = route.params;
+
+  const uriString: string = `file://${photoFile.path}`
+  ImageProcessorPlugin.makePrediction(uriString, (res: any) => {
+    console.log(res);
+  });
+
   const imageSource: ImageURISource = useMemo(() => {
     return {uri: `file://${photoFile.path}`};
   }, [photoFile.path]);

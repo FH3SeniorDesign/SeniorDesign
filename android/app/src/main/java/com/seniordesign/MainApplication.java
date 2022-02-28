@@ -31,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
       // example:
       // packages.add(new MyReactNativePackage());
       packages.add(new ImageFrameProcessorPluginPackage());
+      packages.add(new ImageProcessorPluginPackage());
       // packages.add(new CameraRollPackage());
       return packages;
     }
