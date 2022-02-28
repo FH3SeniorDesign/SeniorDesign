@@ -21,7 +21,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     navigation.replace('CameraScreen');
   };
 
-  const hasAndroidPermissions = async (): Promise<boolean> => {
+  const hasAndroidWritePermissions = async (): Promise<boolean> => {
     const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
     const hasPermission = await PermissionsAndroid.check(permission);
     if (hasPermission) {
@@ -32,8 +32,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   }
 
   const saveImage = async () => {
-    // TODO save image to photo library
-    if (Platform.OS === "android" && !(await hasAndroidPermissions())) {
+    if (Platform.OS === "android" && !(await hasAndroidWritePermissions())) {
       console.log("No permission!")
       return;
     }

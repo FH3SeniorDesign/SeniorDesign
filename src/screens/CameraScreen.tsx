@@ -1,11 +1,12 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/CameraPage.tsx
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {TakePictureButton} from 'components/TakePictureButton';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Switch} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Switch, PermissionsAndroid, Platform, NativeModules} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import {
@@ -60,6 +61,24 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     setFlash(f => (f === 'off' ? 'on' : 'off'));
   }, []);
 
+  const hasAndroidReadPermissions = async (): Promise<boolean> => {
+    const permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
+    const hasPermission = await PermissionsAndroid.check(permission);
+    if (hasPermission) {
+      return true;
+    }
+    const status = await PermissionsAndroid.request(permission);
+    return status === "granted";
+  }
+
+  const getImageFromStorage = async () => {
+    const res = await launchImageLibrary({mediaType: 'photo'})
+    .then(res => {
+      // do something
+    })
+    .catch(err => console.log("Error - ", err));
+  };
+
   const toggleRealtimeFeedback = useCallback(() => {
     setFeedbackEnabled(feedbackEnabled => !feedbackEnabled);
     }, []);
@@ -78,6 +97,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   const frameProcessor = useFrameProcessor(frame => {
     'worklet';
     const res = scanImage(frame);
+    console.log(frame);
     console.log(res);
   }, []);
 
@@ -126,6 +146,16 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
           </TouchableOpacity>
         )}
       </View>
+      <View style={styles.leftButtonRow}>
+        <TouchableOpacity style={styles.button} onPress={getImageFromStorage}>
+          <IonIcon
+            name='albums'
+            color="white"
+            size={24}
+          />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.realtimeFeedbackSwitch}>
         <Switch onValueChange={toggleRealtimeFeedback} value={feedbackEnabled}/>
       </View>
@@ -160,6 +190,13 @@ const styles = StyleSheet.create({
     // right: SAFE_AREA_PADDING.paddingRight,
     // top: SAFE_AREA_PADDING.paddingTop,
     right: 40,
+    bottom: 40,
+  },
+  leftButtonRow: {
+    position: 'absolute',
+    // right: SAFE_AREA_PADDING.paddingRight,
+    // top: SAFE_AREA_PADDING.paddingTop,
+    left: 40,
     bottom: 40,
   },
   realtimeFeedbackSwitch: {

@@ -17,6 +17,7 @@
     "react": "17.0.2",
     "react-native": "0.67.1",
     "react-native-elements": "^4.0.0-beta.0",
+    "react-native-image-picker": "^4.7.3",
     "react-native-reanimated": "^2.4.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.2",
