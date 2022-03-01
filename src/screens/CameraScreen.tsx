@@ -101,12 +101,18 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     [devices.back, devices.front],
   );
   const supportsFlash = device?.hasFlash ?? false;
+  
 
+  function testFunction() {
+    console.log("Here");
+  }
+  
   const frameProcessor = useFrameProcessor(frame => {
     'worklet';
     const res = scanImage(frame);
     console.log(frame);
     console.log(res);
+    testFunction();
   }, []);
 
   if (device == null) {
