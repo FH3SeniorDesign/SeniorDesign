@@ -2,10 +2,21 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import * as React from 'react';
 import {useMemo} from 'react';
-import {Image, ImageURISource, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ImageURISource,
+  Platform,
+  StyleSheet,
+  View,
+  PermissionsAndroid,
+  NativeModules,
+} from 'react-native';
+import CameraRoll from '@react-native-community/cameraroll';
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
+
+const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 
@@ -13,15 +24,39 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   console.log('## Rendering ImagePreviewScreen');
 
   const {photoFile} = route.params;
+
+  const uriString: string = `file://${photoFile.path}`;
+  ImageProcessorPlugin.makePrediction(uriString, (res: any) => {
+    console.log(res);
+  });
+
   const imageSource: ImageURISource = useMemo(() => {
     return {uri: `file://${photoFile.path}`};
   }, [photoFile.path]);
   const discardImage = () => {
     navigation.replace('CameraScreen');
   };
-  const saveImage = () => {
-    // TODO save image to photo library
 
+  const hasAndroidWritePermissions = async (): Promise<boolean> => {
+    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+    const hasPermission = await PermissionsAndroid.check(permission);
+    if (hasPermission) {
+      return true;
+    }
+    const status = await PermissionsAndroid.request(permission);
+    return status === 'granted';
+  };
+
+  const saveImage = async () => {
+    if (Platform.OS === 'android' && !(await hasAndroidWritePermissions())) {
+      console.log('No permission!');
+      return;
+    }
+
+    console.log('saving photo');
+    CameraRoll.save(`file://${photoFile.path}`).catch((reason: any) =>
+      console.log(reason),
+    );
     navigation.replace('CameraScreen');
   };
 
