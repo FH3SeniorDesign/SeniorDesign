@@ -6,7 +6,14 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Switch, PermissionsAndroid, Platform, NativeModules} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Switch,
+  NativeModules,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import {
@@ -63,33 +70,33 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     setFlash(f => (f === 'off' ? 'on' : 'off'));
   }, []);
 
-  const hasAndroidReadPermissions = async (): Promise<boolean> => {
-    const permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
-    const hasPermission = await PermissionsAndroid.check(permission);
-    if (hasPermission) {
-      return true;
-    }
-    const status = await PermissionsAndroid.request(permission);
-    return status === "granted";
-  }
+  // const hasAndroidReadPermissions = async (): Promise<boolean> => {
+  //   const permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
+  //   const hasPermission = await PermissionsAndroid.check(permission);
+  //   if (hasPermission) {
+  //     return true;
+  //   }
+  //   const status = await PermissionsAndroid.request(permission);
+  //   return status === 'granted';
+  // };
 
   const getImageFromStorage = async () => {
-    const res = await launchImageLibrary({mediaType: 'photo'})
-    .then(res => {
-      if (!res.didCancel) {
-        let uri = res.assets![0].uri;
-        console.log(uri);
-        ImageProcessorPlugin.makePrediction(uri, (res: any) => {
-          console.log(res);
-        })
-      }
-    })
-    .catch(err => console.log("Error - ", err));
+    await launchImageLibrary({mediaType: 'photo'})
+      .then(res => {
+        if (!res.didCancel) {
+          let uri = res.assets![0].uri;
+          console.log(uri);
+          ImageProcessorPlugin.makePrediction(uri, (distortionResult: any) => {
+            console.log(distortionResult);
+          });
+        }
+      })
+      .catch(err => console.log('Error - ', err));
   };
 
   const toggleRealtimeFeedback = useCallback(() => {
-    setFeedbackEnabled(feedbackEnabled => !feedbackEnabled);
-    }, []);
+    setFeedbackEnabled(f => !f);
+  }, []);
 
   const cameraRef = useRef<Camera>(null);
   const devices = useCameraDevices();
@@ -156,16 +163,15 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
       </View>
       <View style={styles.leftButtonRow}>
         <TouchableOpacity style={styles.button} onPress={getImageFromStorage}>
-          <IonIcon
-            name='albums'
-            color="white"
-            size={24}
-          />
+          <IonIcon name="albums" color="white" size={24} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.realtimeFeedbackSwitch}>
-        <Switch onValueChange={toggleRealtimeFeedback} value={feedbackEnabled}/>
+        <Switch
+          onValueChange={toggleRealtimeFeedback}
+          value={feedbackEnabled}
+        />
       </View>
     </SafeAreaView>
   );

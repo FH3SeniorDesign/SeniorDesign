@@ -2,8 +2,16 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import * as React from 'react';
 import {useMemo} from 'react';
-import {Image, ImageURISource, Platform, StyleSheet, View, PermissionsAndroid, NativeModules} from 'react-native';
-import CameraRoll from '@react-native-community/cameraroll'
+import {
+  Image,
+  ImageURISource,
+  Platform,
+  StyleSheet,
+  View,
+  PermissionsAndroid,
+  NativeModules,
+} from 'react-native';
+import CameraRoll from '@react-native-community/cameraroll';
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
@@ -17,7 +25,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
 
   const {photoFile} = route.params;
 
-  const uriString: string = `file://${photoFile.path}`
+  const uriString: string = `file://${photoFile.path}`;
   ImageProcessorPlugin.makePrediction(uriString, (res: any) => {
     console.log(res);
   });
@@ -36,17 +44,19 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
       return true;
     }
     const status = await PermissionsAndroid.request(permission);
-    return status === "granted";
-  }
+    return status === 'granted';
+  };
 
   const saveImage = async () => {
-    if (Platform.OS === "android" && !(await hasAndroidWritePermissions())) {
-      console.log("No permission!")
+    if (Platform.OS === 'android' && !(await hasAndroidWritePermissions())) {
+      console.log('No permission!');
       return;
     }
 
-    console.log("saving photo")
-    CameraRoll.save(`file://${photoFile.path}`).catch((reason: any) => console.log(reason));
+    console.log('saving photo');
+    CameraRoll.save(`file://${photoFile.path}`).catch((reason: any) =>
+      console.log(reason),
+    );
     navigation.replace('CameraScreen');
   };
 
