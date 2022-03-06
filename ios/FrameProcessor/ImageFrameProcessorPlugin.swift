@@ -30,6 +30,17 @@ public class ImageFrameProcessorPlugin: NSObject, FrameProcessorPluginBase {
       NSLog("ImageFrameProcessorPlugin: -> \(string) (\(type(of: arg)))")
     }
     
-    return ImageModel.evaluate(imageBuffer: imageBuffer)
+    let uiImage = imageBufferToUIImage(imageBuffer: imageBuffer)
+    
+    return ImageModel.evaluate(uiImage: uiImage)
+  }
+  
+  // Reference: https://stackoverflow.com/q/42997462
+  private static func imageBufferToUIImage(imageBuffer: CVImageBuffer) -> UIImage {
+    let ciImage = CIImage(cvImageBuffer: imageBuffer)
+    let context = CIContext(options: nil)
+    let cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
+    
+    return UIImage(cgImage: cgImage)
   }
 }

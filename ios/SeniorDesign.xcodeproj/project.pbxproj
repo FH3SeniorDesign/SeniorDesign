@@ -17,6 +17,8 @@
 		5322F35927C439160057BCE1 /* ImageFrameProcessorPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5322F35827C439160057BCE1 /* ImageFrameProcessorPlugin.swift */; };
 		5322F35B27C439D60057BCE1 /* ImageFrameProcessorPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5322F35A27C439D60057BCE1 /* ImageFrameProcessorPlugin.m */; };
 		5355B38F27CD8CDA00C20A27 /* ImageDistortionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355B38E27CD8CDA00C20A27 /* ImageDistortionResult.swift */; };
+		5355B39327D4343D00C20A27 /* ImageProcessorPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355B39227D4343D00C20A27 /* ImageProcessorPlugin.swift */; };
+		5355B39527D434AD00C20A27 /* ImageProcessorPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5355B39427D434AD00C20A27 /* ImageProcessorPlugin.m */; };
 		67317C391D8251C3834447E0 /* libPods-SeniorDesign.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A38DB74F75B2C6BAD2C5AD9 /* libPods-SeniorDesign.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		CBD4E41CA1C9C7ACA16E1070 /* libPods-SeniorDesign-SeniorDesignTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 463E063E018F97EA89A513C0 /* libPods-SeniorDesign-SeniorDesignTests.a */; };
@@ -57,6 +59,8 @@
 		5322F35827C439160057BCE1 /* ImageFrameProcessorPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageFrameProcessorPlugin.swift; path = FrameProcessor/ImageFrameProcessorPlugin.swift; sourceTree = SOURCE_ROOT; };
 		5322F35A27C439D60057BCE1 /* ImageFrameProcessorPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageFrameProcessorPlugin.m; sourceTree = "<group>"; };
 		5355B38E27CD8CDA00C20A27 /* ImageDistortionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDistortionResult.swift; sourceTree = "<group>"; };
+		5355B39227D4343D00C20A27 /* ImageProcessorPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessorPlugin.swift; sourceTree = "<group>"; };
+		5355B39427D434AD00C20A27 /* ImageProcessorPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageProcessorPlugin.m; sourceTree = "<group>"; };
 		6465F2CBD16841C0AD57D3EF /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		7482039024584B6B88D83A38 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SeniorDesign/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 		13B07FAE1A68108700A75B9A /* SeniorDesign */ = {
 			isa = PBXGroup;
 			children = (
+				5355B39027D4336D00C20A27 /* ImageProcessor */,
 				5355B38D27CD8CC900C20A27 /* Models */,
 				5322F35C27C440A10057BCE1 /* ML */,
 				5322F35627C438F70057BCE1 /* FrameProcessor */,
@@ -187,6 +192,15 @@
 				5355B38E27CD8CDA00C20A27 /* ImageDistortionResult.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5355B39027D4336D00C20A27 /* ImageProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				5355B39227D4343D00C20A27 /* ImageProcessorPlugin.swift */,
+				5355B39427D434AD00C20A27 /* ImageProcessorPlugin.m */,
+			);
+			path = ImageProcessor;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -466,6 +480,8 @@
 				5313883F27CD6C80009178DF /* TFLiteExtension.swift in Sources */,
 				5322F35927C439160057BCE1 /* ImageFrameProcessorPlugin.swift in Sources */,
 				5322F35B27C439D60057BCE1 /* ImageFrameProcessorPlugin.m in Sources */,
+				5355B39327D4343D00C20A27 /* ImageProcessorPlugin.swift in Sources */,
+				5355B39527D434AD00C20A27 /* ImageProcessorPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

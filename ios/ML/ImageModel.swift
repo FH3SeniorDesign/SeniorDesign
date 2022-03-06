@@ -13,8 +13,8 @@ import UIKit
 // Reference: https://www.tensorflow.org/lite/guide/inference#load_and_run_a_model_in_swift
 public class ImageModel {
   
-  public static func evaluate(imageBuffer: CVImageBuffer) -> Any {
-    NSLog("# ImageModel.evaluate(imageBufferSize=%dx%d)", CVPixelBufferGetWidth(imageBuffer), CVPixelBufferGetHeight(imageBuffer))
+  public static func evaluate(uiImage: UIImage) -> Any {
+    NSLog("# ImageMododel.evaluate(uiImage=%dx%d)", Int(uiImage.size.width * uiImage.scale), Int(uiImage.size.height * uiImage.scale))
     
     guard
       let modelPath = Bundle.main.path(forResource: "mliqa_tflite_mobilenet", ofType: "tflite")
@@ -34,8 +34,6 @@ public class ImageModel {
       
       // Preprocess image
       NSLog("Preprocessing image...")
-      
-      let uiImage = imageBufferToUIImage(imageBuffer: imageBuffer)
       
       guard
         let inputData: Data = uiImage.scaledData(with: CGSize(width: 448, height: 448), byteCount: 448 * 448 * 3, isQuantized: false)
@@ -77,14 +75,5 @@ public class ImageModel {
       NSLog("Error: \(error)")
       return []
     }
-  }
-  
-  // Reference: https://stackoverflow.com/q/42997462
-  private static func imageBufferToUIImage(imageBuffer: CVImageBuffer) -> UIImage {
-    let ciImage = CIImage(cvImageBuffer: imageBuffer)
-    let context = CIContext(options: nil)
-    let cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
-    
-    return UIImage(cgImage: cgImage)
   }
 }

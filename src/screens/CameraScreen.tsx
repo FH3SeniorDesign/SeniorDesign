@@ -112,7 +112,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   const supportsFlash = device?.hasFlash ?? false;
 
   const provideFeedback = (imageDistortionResultJson: string): void => {
-    console.log('## provideFeedback');
+    console.log('# provideFeedback');
     console.log(`imageDistortionResultJson: ${imageDistortionResultJson}`);
 
     const imageDistortionResult: ImageDistortionResult =
@@ -128,7 +128,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
 
   const frameProcessor = useFrameProcessor(frame => {
     'worklet';
-    console.log('## useFrameProcessor');
+    console.log('# useFrameProcessor');
 
     const imageDistortionResultJson: string = scanImage(frame);
 
