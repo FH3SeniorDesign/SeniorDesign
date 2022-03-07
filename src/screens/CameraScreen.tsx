@@ -234,8 +234,10 @@ const styles = StyleSheet.create({
   },
   realtimeFeedbackSwitch: {
     position: 'absolute',
-    top: 20,
-    right: 20,
+    top: 50,
+    right: 30,
+    // right: SAFE_AREA_PADDING.paddingRight,
+    // top: SAFE_AREA_PADDING.paddingTop,
     backgroundColor: '#00000000',
   },
 });

@@ -12,15 +12,12 @@ import Foundation
 class ImageProcessorPlugin: NSObject {
   
   @objc func makePrediction(_ path: String, callback: @escaping RCTResponseSenderBlock) -> Void {
-    NSLog("# ImageProcessorPlugin.makePrediction(path=%s)", path)
+    NSLog("# ImageProcessorPlugin.makePrediction(path=%@)", path)
     
-    do {
-      // Reference: https://stackoverflow.com/q/37574689
-      let url = URL(fileURLWithPath: path)
-      let imageData = try Data(contentsOf: url)
-      
+    let formatted_path = String(path.suffix(path.count - 7))
+    if FileManager.default.fileExists(atPath: formatted_path) {
       guard
-        let uiImage = UIImage(data: imageData)
+        let uiImage = UIImage(contentsOfFile: formatted_path)
       else {
         NSLog("Error loading image from path!")
         callback([])
@@ -28,8 +25,8 @@ class ImageProcessorPlugin: NSObject {
       }
       
       callback([ImageModel.evaluate(uiImage: uiImage)])
-    } catch {
-      NSLog("Error loading image: \(error)")
+    } else {
+      NSLog("Image cannot be found!")
       callback([])
     }
   }
