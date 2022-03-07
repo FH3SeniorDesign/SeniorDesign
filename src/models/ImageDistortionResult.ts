@@ -46,7 +46,7 @@ export class ImageDistortionResult {
     return `ImageDistortionResult(globalQuality=${this.globalQuality}, blurry=${this.blurry}, shaky=${this.shaky}, bright=${this.bright}, dark=${this.dark}, grainy=${this.grainy}, none=${this.none}, other=${this.other})`;
   }
 
-  static from(json: string): ImageDistortionResult {
-    return Object.assign(new ImageDistortionResult(), JSON.parse(json));
+  static from(object: any): ImageDistortionResult {
+    return Object.assign(new ImageDistortionResult(), object);
   }
 }
