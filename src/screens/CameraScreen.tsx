@@ -111,12 +111,12 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   );
   const supportsFlash = device?.hasFlash ?? false;
 
-  const provideFeedback = (imageDistortionResultJson: string): void => {
+  const provideFeedback = (result: any): void => {
     console.log('# provideFeedback');
-    console.log(`imageDistortionResultJson: ${imageDistortionResultJson}`);
+    console.log(`result: ${result}`);
 
     const imageDistortionResult: ImageDistortionResult =
-      ImageDistortionResult.from(imageDistortionResultJson);
+      ImageDistortionResult.from(result);
     const descendingDistortions: [string, number][] =
       imageDistortionResult.descendingDistortions;
 
