@@ -8,40 +8,12 @@ import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
 import { waitFor } from '@testing-library/react-native';
-
+import {test} from "../feedback/feedback";
 const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 
 const array = ["bye", "hi", "hello"]
-
-function test(res: any) {
-  // let key: string
-  // let value: number
-  var result = ""; 
-  for(const [key, value] of Object.entries(res)) {
-    //console.log(`${key}: ${value}`);
-    var val = parseFloat(`${value}`); 
-    if(val > 0.2) {
-      result += key + " ";
-      // console.log("this is too " + key);
-      // AccessibilityInfo.announceForAccessibility("this is too" + key);
-    //   setTimeout(function(){
-    //   console.log(key);
-    //   AccessibilityInfo.announceForAccessibility(key)}, 2500);
-    //   // console.log("te");
-    // }
-  }
-
-  
-
-  // for(let i = 0; i < 3; i++) {
-  //   AccessibilityInfo.announceForAccessibility(array[i]);
-  // }
-  }
-  console.log(result);
-  AccessibilityInfo.announceForAccessibility(result);
-}
 
 export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   console.log('## Rendering ImagePreviewScreen');
