@@ -13,22 +13,38 @@ import UIKit
 // Reference: https://www.tensorflow.org/lite/guide/inference#load_and_run_a_model_in_swift
 public class ImageModel {
   
-  public static func evaluate(uiImage: UIImage) -> Any {
-    NSLog("# ImageMododel.evaluate(uiImage=%dx%d)", Int(uiImage.size.width * uiImage.scale), Int(uiImage.size.height * uiImage.scale))
-    
+  private var interpreter: Interpreter?
+  
+  init() {
     guard
       let modelPath = Bundle.main.path(forResource: "mliqa_tflite_mobilenet", ofType: "tflite")
     else {
       NSLog("Fetching model failed!")
-      return []
+      return
     }
     
     do {
       // Initialize an interpreter with the model
       NSLog("Loading model interpreter...")
       
-      let interpreter = try Interpreter(modelPath: modelPath)
-      
+      interpreter = try Interpreter(modelPath: modelPath)
+    } catch {
+      NSLog("init error: \(error)")
+      interpreter = nil
+    }
+  }
+  
+  public func evaluate(uiImage: UIImage) -> Any {
+    NSLog("# ImageMododel.evaluate(uiImage=%dx%d)", Int(uiImage.size.width * uiImage.scale), Int(uiImage.size.height * uiImage.scale))
+    
+    guard
+      let interpreter: Interpreter = interpreter
+    else {
+      NSLog("Interpreter is (nil)!")
+      return []
+    }
+    
+    do {
       // Allocate memory for the model's input `Tensor`s
       try interpreter.allocateTensors()
       
@@ -72,7 +88,7 @@ public class ImageModel {
       
       return imageDistortionResult.toJson()
     } catch {
-      NSLog("Error: \(error)")
+      NSLog("Error evaluating image: \(error)")
       return []
     }
   }

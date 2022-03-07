@@ -10,6 +10,8 @@ import Foundation
 @objc(ImageFrameProcessorPlugin)
 public class ImageFrameProcessorPlugin: NSObject, FrameProcessorPluginBase {
   
+  private static var imageModel: ImageModel = ImageModel();
+  
   @objc
   public static func callback(_ frame: Frame!, withArgs args: [Any]!) -> Any! {
     guard let imageBuffer = CMSampleBufferGetImageBuffer(frame.buffer) else {
@@ -32,7 +34,7 @@ public class ImageFrameProcessorPlugin: NSObject, FrameProcessorPluginBase {
     
     let uiImage = imageBufferToUIImage(imageBuffer: imageBuffer)
     
-    return ImageModel.evaluate(uiImage: uiImage)
+    return imageModel.evaluate(uiImage: uiImage)
   }
   
   // Reference: https://stackoverflow.com/q/42997462

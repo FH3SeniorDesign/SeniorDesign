@@ -11,6 +11,8 @@ import Foundation
 @objc(ImageProcessorPlugin)
 class ImageProcessorPlugin: NSObject {
   
+  private var imageModel: ImageModel = ImageModel()
+  
   @objc func makePrediction(_ path: String, callback: @escaping RCTResponseSenderBlock) -> Void {
     NSLog("# ImageProcessorPlugin.makePrediction(path=%@)", path)
     
@@ -24,7 +26,7 @@ class ImageProcessorPlugin: NSObject {
         return
       }
       
-      callback([ImageModel.evaluate(uiImage: uiImage)])
+      callback([imageModel.evaluate(uiImage: uiImage)])
     } else {
       NSLog("Image cannot be found!")
       callback([])
