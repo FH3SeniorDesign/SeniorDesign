@@ -1,21 +1,23 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/CameraPage.tsx
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {launchImageLibrary} from 'react-native-image-picker';
 import {TakePictureButton} from 'components/TakePictureButton';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
+  NativeModules,
   StyleSheet,
+  Switch,
   Text,
   TouchableOpacity,
   View,
-  Switch,
-  NativeModules,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {launchImageLibrary} from 'react-native-image-picker';
 import 'react-native-reanimated';
+import {runOnJS} from 'react-native-reanimated';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import {
   Camera,
   CameraPermissionStatus,
@@ -109,11 +111,28 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   );
   const supportsFlash = device?.hasFlash ?? false;
 
+  const provideFeedback = (result: any): void => {
+    console.log('# provideFeedback');
+    console.log(`result: ${result}`);
+
+    const imageDistortionResult: ImageDistortionResult =
+      ImageDistortionResult.from(result);
+    const descendingDistortions: [string, number][] =
+      imageDistortionResult.descendingDistortions;
+
+    console.log('imageDistortionResult:', imageDistortionResult.toString());
+    console.log('descendingDistortions:', descendingDistortions);
+
+    // TODO provide feedback
+  };
+
   const frameProcessor = useFrameProcessor(frame => {
     'worklet';
-    const res = scanImage(frame);
-    console.log(frame);
-    console.log(res);
+    console.log('# useFrameProcessor');
+
+    const imageDistortionResultJson: string = scanImage(frame);
+
+    runOnJS(provideFeedback)(imageDistortionResultJson);
   }, []);
 
   if (device == null) {
@@ -215,8 +234,10 @@ const styles = StyleSheet.create({
   },
   realtimeFeedbackSwitch: {
     position: 'absolute',
-    top: 20,
-    right: 20,
+    top: 50,
+    right: 30,
+    // right: SAFE_AREA_PADDING.paddingRight,
+    // top: SAFE_AREA_PADDING.paddingTop,
     backgroundColor: '#00000000',
   },
 });

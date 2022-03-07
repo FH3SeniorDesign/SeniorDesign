@@ -39,10 +39,9 @@
 	<string>$(PRODUCT_NAME) needs access to your camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<!-- https://github.com/react-native-cameraroll/react-native-cameraroll#permissions -->
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs access to your photos.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs access to your photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your photos.</string>
 	<key>UIAppFonts</key>
 	<array>
