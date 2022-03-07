@@ -33,20 +33,21 @@ class ImageDistortionResult: NSObject, Encodable {
     return "ImageDistortionResult(globalQuality=\(globalQuality), blurry=\(blurry), shaky=\(shaky), bright=\(bright), dark=\(dark), grainy=\(grainy), none=\(none), other=\(other))"
   }
   
-  public func toJson() -> String {
+  public func toJson() -> NSDictionary {
     do {
       let encodedData = try JSONEncoder().encode(self)
+      let json = try JSONSerialization.jsonObject(with: encodedData, options: [])
       
       guard
-        let json = String(data: encodedData, encoding: String.Encoding.utf8)
+        let dictionary = json as? [String : Any]
       else {
-        return ""
+        return [:]
       }
       
-      return json
+      return dictionary as NSDictionary
     } catch {
-      NSLog("Error converting ImageDistortionResult to JSON")
-      return ""
+      NSLog("Error converting ImageDistortionResult to dictionary!")
+      return [:]
     }
   }
 }
