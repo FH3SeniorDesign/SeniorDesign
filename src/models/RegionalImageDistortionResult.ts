@@ -1,4 +1,3 @@
-import {RegionalImageDistortionConstants} from 'constants/RegionalImageDistortionConstants';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {Vector} from 'utilities/Vector';
@@ -56,11 +55,19 @@ export class RegionalImageDistortionResult {
       this.imageDistortionResults.map(
         (row: ImageDistortionResult[], rowIndex: number) => {
           return row.map((_: ImageDistortionResult, columnIndex: number) => {
-            const vector: [number, number] = [columnIndex, rowIndex];
+            const vector: [number, number] = [
+              columnIndex,
+              this.imageDistortionResults.length - rowIndex - 1,
+            ];
+            const topLeftCoordinate: [number, number] = [0, 0];
+            const centerCoordinate: [number, number] = [
+              Math.floor(row.length / 2),
+              Math.floor(this.imageDistortionResults.length / 2),
+            ];
             const translatedVector: [number, number] = Vector.translateOrigin(
               vector,
-              RegionalImageDistortionConstants.TOP_LEFT_COORDINATE,
-              RegionalImageDistortionConstants.CENTER_COORDINATE,
+              topLeftCoordinate,
+              centerCoordinate,
             );
 
             return Vector.normalize(translatedVector);

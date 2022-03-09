@@ -32,15 +32,22 @@ export class Vector {
 
   static normalize(vector: [number, number]): [number, number] {
     const [x, y] = vector;
-    const magnitude = this.calculateMagnitude(vector);
+    const magnitude = this.magnitude(vector);
 
     return [x / magnitude || 0, y / magnitude || 0];
   }
 
-  static calculateMagnitude(vector: [number, number]): number {
+  static magnitude(vector: [number, number]): number {
     const [x, y] = vector;
 
     return Math.sqrt(x ** 2 + y ** 2);
+  }
+
+  static angle(vector: [number, number]): number {
+    const [x, y] = vector;
+    const degrees: number = (Math.atan2(y, x) * 180) / Math.PI; // Range: [-180, 180)
+
+    return (degrees + 360) % 360; // Range: [0, 360)
   }
 
   static translateOrigin(

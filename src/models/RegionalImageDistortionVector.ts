@@ -6,33 +6,22 @@ import {Vector} from 'utilities/Vector';
 
 export class RegionalImageDistortionVector {
   vector: [number, number];
-  direction: RegionalImageDistortionDirection;
   magnitude: number;
+  direction: RegionalImageDistortionDirection;
 
   constructor(vector: [number, number] = [0, 0]) {
     this.vector = vector;
-    this.direction = this.calculateImageDistortionDirection(this.vector);
-    this.magnitude = Vector.calculateMagnitude(this.vector);
+    this.magnitude = Vector.magnitude(vector);
+    this.direction = this.calculateImageDistortionDirection(vector);
   }
 
   private calculateImageDistortionDirection(
     vector: [number, number],
   ): RegionalImageDistortionDirection {
-    const [x, y] = vector;
-    let [row, column] = RegionalImageDistortionConstants.CENTER_COORDINATE;
+    const angle: number = Vector.angle(vector);
+    const offsetAngle: number = (angle + 22.5) % 360;
+    const octant: number = Math.floor(offsetAngle / 45);
 
-    if (x < 0) {
-      column = 0;
-    } else if (x > 0) {
-      column = RegionalImageDistortionConstants.COLUMNS - 1;
-    }
-
-    if (y < 0) {
-      row = 0;
-    } else if (y > 0) {
-      row = RegionalImageDistortionConstants.ROWS - 1;
-    }
-
-    return RegionalImageDistortionConstants.DIRECTIONS[row][column];
+    return RegionalImageDistortionConstants.OCTANT_DIRECTIONS[octant];
   }
 }

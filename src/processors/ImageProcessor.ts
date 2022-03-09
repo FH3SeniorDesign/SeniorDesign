@@ -67,7 +67,6 @@ export class ImageProcessor {
           offset: {x: j * croppedWidth, y: i * croppedHeight},
           size: {width: croppedWidth, height: croppedHeight},
         };
-
         cropImagePromises[i][j] = ImageEditor.cropImage(path, cropData);
       }
     }
