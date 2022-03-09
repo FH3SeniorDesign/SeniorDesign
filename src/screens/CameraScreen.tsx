@@ -2,18 +2,18 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {TakePictureButton} from 'components/TakePictureButton';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
+import {ImageDistortionVector} from 'models/ImageDistortionVector';
+import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
 import {scanImage} from 'processors/FrameProcessors';
+import {ImageProcessor} from 'processors/ImageProcessor';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
 import {
-  NativeModules,
-  StyleSheet,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+  Asset,
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 import 'react-native-reanimated';
 import {runOnJS} from 'react-native-reanimated';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -26,8 +26,6 @@ import {
   useFrameProcessor,
 } from 'react-native-vision-camera';
 import {RootStackParamList} from 'RootStackParamList';
-
-const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CameraScreen'>;
 
@@ -57,7 +55,8 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
 
   const previewPicture = useCallback(
     (photoFile: PhotoFile) => {
-      console.log(`photoFile: ${JSON.stringify(photoFile)}`);
+      console.log('# previewPicture');
+      console.log('photoFile:', photoFile);
       navigation.navigate('ImagePreviewScreen', {photoFile});
     },
     [navigation],
@@ -83,17 +82,60 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   // };
 
   const getImageFromStorage = async () => {
+    console.log('# getImageFromStorage');
+
     await launchImageLibrary({mediaType: 'photo'})
-      .then(res => {
-        if (!res.didCancel) {
-          let uri = res.assets![0].uri;
-          console.log(uri);
-          ImageProcessorPlugin.makePrediction(uri, (distortionResult: any) => {
-            console.log(distortionResult);
-          });
+      .then(async (res: ImagePickerResponse) => {
+        if (!res.didCancel && res.assets != null) {
+          const asset: Asset = res.assets[0];
+
+          if (
+            asset.uri != null &&
+            asset.width != null &&
+            asset.height != null
+          ) {
+            // Global image evaluation
+            const imageDistortionResult: ImageDistortionResult =
+              await ImageProcessor.evaluateGlobal(asset.uri);
+            const descendingDistortions: [string, number][] =
+              imageDistortionResult.getDescendingDistortions();
+
+            console.log(
+              'imageDistortionResult:',
+              JSON.stringify(imageDistortionResult),
+            );
+            console.log(
+              'descendingDistortions:',
+              JSON.stringify(descendingDistortions),
+            );
+
+            // Regional image evaluation
+            const regionalImageDistortionResult: RegionalImageDistortionResult =
+              await ImageProcessor.evaluateRegions(
+                asset.uri,
+                asset.width,
+                asset.height,
+              );
+            const descendingDistortionVectors: [
+              string,
+              ImageDistortionVector,
+            ][] =
+              regionalImageDistortionResult.getDescendingDistortionVectors();
+
+            console.log(
+              'regionalImageDistortionResult:',
+              JSON.stringify(regionalImageDistortionResult),
+            );
+            console.log(
+              'descendingDistortionVectors:',
+              JSON.stringify(descendingDistortionVectors),
+            );
+
+            // TODO provide feedback
+          }
         }
       })
-      .catch(err => console.log('Error - ', err));
+      .catch(err => console.log('launchImageLibrary error:', err));
   };
 
   const toggleRealtimeFeedback = useCallback(() => {
@@ -111,16 +153,16 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   );
   const supportsFlash = device?.hasFlash ?? false;
 
-  const provideFeedback = (result: any): void => {
+  const provideFeedback = (resultObject: object): void => {
     console.log('# provideFeedback');
-    console.log(`result: ${result}`);
+    console.log('resultObject:', resultObject);
 
     const imageDistortionResult: ImageDistortionResult =
-      ImageDistortionResult.from(result);
+      ImageDistortionResult.from(resultObject);
     const descendingDistortions: [string, number][] =
-      imageDistortionResult.descendingDistortions;
+      imageDistortionResult.getDescendingDistortions();
 
-    console.log('imageDistortionResult:', imageDistortionResult.toString());
+    console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
     // TODO provide feedback
@@ -130,9 +172,9 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     'worklet';
     console.log('# useFrameProcessor');
 
-    const imageDistortionResultJson: string = scanImage(frame);
+    const resultObject: object = scanImage(frame);
 
-    runOnJS(provideFeedback)(imageDistortionResultJson);
+    runOnJS(provideFeedback)(resultObject);
   }, []);
 
   if (device == null) {

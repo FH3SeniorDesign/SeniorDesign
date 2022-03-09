@@ -1,22 +1,23 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/MediaPage.tsx
+import CameraRoll from '@react-native-community/cameraroll';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {ImageDistortionResult} from 'models/ImageDistortionResult';
+import {ImageDistortionVector} from 'models/ImageDistortionVector';
+import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
+import {ImageProcessor} from 'processors/ImageProcessor';
 import * as React from 'react';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {
   Image,
   ImageURISource,
+  PermissionsAndroid,
   Platform,
   StyleSheet,
   View,
-  PermissionsAndroid,
-  NativeModules,
 } from 'react-native';
-import CameraRoll from '@react-native-community/cameraroll';
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
-
-const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 
@@ -24,15 +25,55 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   console.log('## Rendering ImagePreviewScreen');
 
   const {photoFile} = route.params;
+  const uri: string = `file://${photoFile.path}`;
 
-  const uriString: string = `file://${photoFile.path}`;
-  ImageProcessorPlugin.makePrediction(uriString, (res: any) => {
-    console.log(res);
+  const evaluateImage = async () => {
+    console.log('# evaluteImage');
+
+    // Global image evaluation
+    const imageDistortionResult: ImageDistortionResult =
+      await ImageProcessor.evaluateGlobal(uri);
+    const descendingDistortions: [string, number][] =
+      imageDistortionResult.getDescendingDistortions();
+
+    console.log(
+      'imageDistortionResult:',
+      JSON.stringify(imageDistortionResult),
+    );
+    console.log(
+      'descendingDistortions:',
+      JSON.stringify(descendingDistortions),
+    );
+
+    // Regional image evaluation
+    const regionalImageDistortionResult: RegionalImageDistortionResult =
+      await ImageProcessor.evaluateRegions(
+        uri,
+        photoFile.width,
+        photoFile.height,
+      );
+    const descendingDistortionVectors: [string, ImageDistortionVector][] =
+      regionalImageDistortionResult.getDescendingDistortionVectors();
+
+    console.log(
+      'regionalImageDistortionResult:',
+      JSON.stringify(regionalImageDistortionResult),
+    );
+    console.log(
+      'descendingDistortionVectors:',
+      JSON.stringify(descendingDistortionVectors),
+    );
+
+    // TODO provide feedback
+  };
+
+  useEffect(() => {
+    evaluateImage();
   });
 
   const imageSource: ImageURISource = useMemo(() => {
-    return {uri: `file://${photoFile.path}`};
-  }, [photoFile.path]);
+    return {uri};
+  }, [uri]);
   const discardImage = () => {
     navigation.replace('CameraScreen');
   };
@@ -54,9 +95,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     }
 
     console.log('saving photo');
-    CameraRoll.save(`file://${photoFile.path}`).catch((reason: any) =>
-      console.log(reason),
-    );
+    CameraRoll.save(uri).catch(console.error);
     navigation.replace('CameraScreen');
   };
 

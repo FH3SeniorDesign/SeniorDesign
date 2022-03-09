@@ -10,5 +10,11 @@
 #import <React/RCTBridgeModule.h>
 
 @interface RCT_EXTERN_MODULE(ImageProcessorPlugin, NSObject)
-RCT_EXTERN_METHOD(makePrediction:(NSString *)path callback:(RCTResponseSenderBlock))
+RCT_EXTERN_METHOD(makePrediction:(NSString *)path resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+
+// Reference: https://reactnative.dev/docs/0.62/native-modules-ios#implementing--requiresmainqueuesetup
++ (BOOL)requiresMainQueueSetup
+{
+  return NO;
+}
 @end

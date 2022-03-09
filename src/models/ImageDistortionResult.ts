@@ -28,25 +28,22 @@ export class ImageDistortionResult {
     this.other = other;
   }
 
-  get descendingDistortions(): [string, number][] {
-    let distortions: [string, number][] = [
-      ['blurry', this.blurry],
-      ['shaky', this.shaky],
-      ['bright', this.bright],
-      ['dark', this.dark],
-      ['grainy', this.grainy],
-      ['none', this.none],
-      ['other', this.other],
-    ];
-
-    return distortions.sort((a, b) => b[1] - a[1]);
+  static from(imageDistortionResultObject: object): ImageDistortionResult {
+    return Object.assign(
+      new ImageDistortionResult(),
+      imageDistortionResultObject,
+    );
   }
 
-  toString() {
-    return `ImageDistortionResult(globalQuality=${this.globalQuality}, blurry=${this.blurry}, shaky=${this.shaky}, bright=${this.bright}, dark=${this.dark}, grainy=${this.grainy}, none=${this.none}, other=${this.other})`;
-  }
+  getDescendingDistortions(): [string, number][] {
+    let distortions: [string, number][] = Object.entries(this).filter(
+      ([property]: [string, number]) => {
+        return property !== 'globalQuality';
+      },
+    );
 
-  static from(object: any): ImageDistortionResult {
-    return Object.assign(new ImageDistortionResult(), object);
+    return distortions.sort((a: [string, number], b: [string, number]) => {
+      return -(a[1] - b[1]);
+    });
   }
 }
