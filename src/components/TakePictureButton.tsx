@@ -1,4 +1,4 @@
-import {CAPTURE_BUTTON_SIZE} from 'Constants';
+import {CAPTURE_BUTTON_SIZE} from 'constants/AppConstants';
 import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';

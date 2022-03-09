@@ -85,7 +85,6 @@ public class ImageModel {
       let imageDistortionResult: ImageDistortionResult = ImageDistortionResult(globalQuality: globalScoreOutputData[0], blurry: labelsOutputData[0], shaky: labelsOutputData[1], bright: labelsOutputData[2], dark: labelsOutputData[3], grainy: labelsOutputData[4], none: labelsOutputData[5], other: labelsOutputData[6])
       
       NSLog("imageDistortionResult: %@", imageDistortionResult)
-      
       return imageDistortionResult.toJson()
     } catch {
       NSLog("Error evaluating image: \(error)")

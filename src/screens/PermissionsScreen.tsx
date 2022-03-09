@@ -1,6 +1,6 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/PermissionsPage.tsx
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {CONTENT_SPACING} from 'Constants';
+import {CONTENT_SPACING} from 'constants/AppConstants';
 import * as React from 'react';
 import {useCallback, useEffect, useState} from 'react';
 import {Button, Linking, StyleSheet, Text, View} from 'react-native';

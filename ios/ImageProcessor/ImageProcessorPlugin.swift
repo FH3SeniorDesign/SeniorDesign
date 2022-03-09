@@ -13,23 +13,22 @@ class ImageProcessorPlugin: NSObject {
   
   private var imageModel: ImageModel = ImageModel()
   
-  @objc func makePrediction(_ path: String, callback: @escaping RCTResponseSenderBlock) -> Void {
+  @objc func makePrediction(_ path: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
     NSLog("# ImageProcessorPlugin.makePrediction(path=%@)", path)
     
-    let formatted_path = String(path.suffix(path.count - 7))
-    if FileManager.default.fileExists(atPath: formatted_path) {
+    let formattedPath = String(path.suffix(path.count - 7))
+    
+    if FileManager.default.fileExists(atPath: formattedPath) {
       guard
-        let uiImage = UIImage(contentsOfFile: formatted_path)
+        let uiImage = UIImage(contentsOfFile: formattedPath)
       else {
-        NSLog("Error loading image from path!")
-        callback([])
+        reject("makePrediction error", "Error loading image from path!", nil)
         return
       }
       
-      callback([imageModel.evaluate(uiImage: uiImage)])
+      resolve(imageModel.evaluate(uiImage: uiImage))
     } else {
-      NSLog("Image cannot be found!")
-      callback([])
+      reject("makePrediction error", "Image cannot be found!", nil)
     }
   }
 }
