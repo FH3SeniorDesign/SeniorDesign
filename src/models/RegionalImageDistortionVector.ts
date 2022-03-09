@@ -1,12 +1,12 @@
 import {
-  ImageDistortionDirection,
-  ImageDistortionRegion,
-} from 'models/ImageDistortionRegion';
+  RegionalImageDistortionConstants,
+  RegionalImageDistortionDirection,
+} from 'constants/RegionalImageDistortionConstants';
 import {Vector} from 'utilities/Vector';
 
-export class ImageDistortionVector {
+export class RegionalImageDistortionVector {
   vector: [number, number];
-  direction: ImageDistortionDirection;
+  direction: RegionalImageDistortionDirection;
   magnitude: number;
 
   constructor(vector: [number, number] = [0, 0]) {
@@ -17,22 +17,22 @@ export class ImageDistortionVector {
 
   private calculateImageDistortionDirection(
     vector: [number, number],
-  ): ImageDistortionDirection {
+  ): RegionalImageDistortionDirection {
     const [x, y] = vector;
-    let [row, column] = ImageDistortionRegion.CENTER_COORDINATE;
+    let [row, column] = RegionalImageDistortionConstants.CENTER_COORDINATE;
 
     if (x < 0) {
       column = 0;
     } else if (x > 0) {
-      column = ImageDistortionRegion.COLUMNS - 1;
+      column = RegionalImageDistortionConstants.COLUMNS - 1;
     }
 
     if (y < 0) {
       row = 0;
     } else if (y > 0) {
-      row = ImageDistortionRegion.ROWS - 1;
+      row = RegionalImageDistortionConstants.ROWS - 1;
     }
 
-    return ImageDistortionRegion.DIRECTIONS[row][column];
+    return RegionalImageDistortionConstants.DIRECTIONS[row][column];
   }
 }

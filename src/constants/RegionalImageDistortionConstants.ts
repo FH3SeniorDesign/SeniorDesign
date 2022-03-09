@@ -1,4 +1,4 @@
-export type ImageDistortionDirection =
+export type RegionalImageDistortionDirection =
   | 'top-left'
   | 'top'
   | 'top-right'
@@ -12,12 +12,12 @@ export type ImageDistortionDirection =
 const ROWS: number = 3;
 const COLUMNS: number = 3;
 
-export const ImageDistortionRegion: {
+export const RegionalImageDistortionConstants: {
   ROWS: number;
   COLUMNS: number;
   TOP_LEFT_COORDINATE: [number, number];
   CENTER_COORDINATE: [number, number];
-  DIRECTIONS: ImageDistortionDirection[][];
+  DIRECTIONS: RegionalImageDistortionDirection[][];
 } = {
   ROWS,
   COLUMNS,

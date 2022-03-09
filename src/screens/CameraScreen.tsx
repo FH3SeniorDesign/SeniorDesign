@@ -2,8 +2,8 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {TakePictureButton} from 'components/TakePictureButton';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
-import {ImageDistortionVector} from 'models/ImageDistortionVector';
 import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
+import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {scanImage} from 'processors/FrameProcessors';
 import {ImageProcessor} from 'processors/ImageProcessor';
 import * as React from 'react';
@@ -118,7 +118,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
               );
             const descendingDistortionVectors: [
               string,
-              ImageDistortionVector,
+              RegionalImageDistortionVector,
             ][] =
               regionalImageDistortionResult.getDescendingDistortionVectors();
 

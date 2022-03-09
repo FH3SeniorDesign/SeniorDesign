@@ -2,8 +2,8 @@
 import CameraRoll from '@react-native-community/cameraroll';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
-import {ImageDistortionVector} from 'models/ImageDistortionVector';
 import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
+import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {ImageProcessor} from 'processors/ImageProcessor';
 import * as React from 'react';
 import {useEffect, useMemo} from 'react';
@@ -52,8 +52,10 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
         photoFile.width,
         photoFile.height,
       );
-    const descendingDistortionVectors: [string, ImageDistortionVector][] =
-      regionalImageDistortionResult.getDescendingDistortionVectors();
+    const descendingDistortionVectors: [
+      string,
+      RegionalImageDistortionVector,
+    ][] = regionalImageDistortionResult.getDescendingDistortionVectors();
 
     console.log(
       'regionalImageDistortionResult:',

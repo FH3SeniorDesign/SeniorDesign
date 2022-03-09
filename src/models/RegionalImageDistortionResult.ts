@@ -1,27 +1,27 @@
-import {ImageDistortionRegion} from 'models/ImageDistortionRegion';
+import {RegionalImageDistortionConstants} from 'constants/RegionalImageDistortionConstants';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
-import {ImageDistortionVector} from 'models/ImageDistortionVector';
+import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {Vector} from 'utilities/Vector';
 
 export class RegionalImageDistortionResult {
   imageDistortionResults: ImageDistortionResult[][];
-  blurryVector: ImageDistortionVector;
-  shakyVector: ImageDistortionVector;
-  brightVector: ImageDistortionVector;
-  darkVector: ImageDistortionVector;
-  grainyVector: ImageDistortionVector;
-  noneVector: ImageDistortionVector;
-  otherVector: ImageDistortionVector;
+  blurryVector: RegionalImageDistortionVector;
+  shakyVector: RegionalImageDistortionVector;
+  brightVector: RegionalImageDistortionVector;
+  darkVector: RegionalImageDistortionVector;
+  grainyVector: RegionalImageDistortionVector;
+  noneVector: RegionalImageDistortionVector;
+  otherVector: RegionalImageDistortionVector;
 
   constructor(
     imageDistortionResults: ImageDistortionResult[][] = [],
-    blurryVector: ImageDistortionVector = new ImageDistortionVector(),
-    shakyVector: ImageDistortionVector = new ImageDistortionVector(),
-    brightVector: ImageDistortionVector = new ImageDistortionVector(),
-    darkVector: ImageDistortionVector = new ImageDistortionVector(),
-    grainyVector: ImageDistortionVector = new ImageDistortionVector(),
-    noneVector: ImageDistortionVector = new ImageDistortionVector(),
-    otherVector: ImageDistortionVector = new ImageDistortionVector(),
+    blurryVector: RegionalImageDistortionVector = new RegionalImageDistortionVector(),
+    shakyVector: RegionalImageDistortionVector = new RegionalImageDistortionVector(),
+    brightVector: RegionalImageDistortionVector = new RegionalImageDistortionVector(),
+    darkVector: RegionalImageDistortionVector = new RegionalImageDistortionVector(),
+    grainyVector: RegionalImageDistortionVector = new RegionalImageDistortionVector(),
+    noneVector: RegionalImageDistortionVector = new RegionalImageDistortionVector(),
+    otherVector: RegionalImageDistortionVector = new RegionalImageDistortionVector(),
   ) {
     this.imageDistortionResults = imageDistortionResults;
     this.blurryVector = blurryVector;
@@ -35,17 +35,16 @@ export class RegionalImageDistortionResult {
     this.calculateDistortionVectors();
   }
 
-  getDescendingDistortionVectors(): [string, ImageDistortionVector][] {
-    let distortionVectors: [string, ImageDistortionVector][] = Object.entries(
-      this,
-    ).filter(([property]: [string, any]) => {
-      return property !== 'imageDistortionResults';
-    });
+  getDescendingDistortionVectors(): [string, RegionalImageDistortionVector][] {
+    let distortionVectors: [string, RegionalImageDistortionVector][] =
+      Object.entries(this).filter(([property]: [string, any]) => {
+        return property !== 'imageDistortionResults';
+      });
 
     return distortionVectors.sort(
       (
-        a: [string, ImageDistortionVector],
-        b: [string, ImageDistortionVector],
+        a: [string, RegionalImageDistortionVector],
+        b: [string, RegionalImageDistortionVector],
       ) => {
         return -(a[1].magnitude - b[1].magnitude);
       },
@@ -60,8 +59,8 @@ export class RegionalImageDistortionResult {
             const vector: [number, number] = [columnIndex, rowIndex];
             const translatedVector: [number, number] = Vector.translateOrigin(
               vector,
-              ImageDistortionRegion.TOP_LEFT_COORDINATE,
-              ImageDistortionRegion.CENTER_COORDINATE,
+              RegionalImageDistortionConstants.TOP_LEFT_COORDINATE,
+              RegionalImageDistortionConstants.CENTER_COORDINATE,
             );
 
             return Vector.normalize(translatedVector);
@@ -102,7 +101,7 @@ export class RegionalImageDistortionResult {
   private calculateDistortionVector(
     distortionScores: number[][],
     normalizedVectors: [number, number][][],
-  ): ImageDistortionVector {
+  ): RegionalImageDistortionVector {
     const scaledVectors: [number, number][] = normalizedVectors.flatMap(
       (row: [number, number][], rowIndex: number) => {
         return row.map(
@@ -117,7 +116,7 @@ export class RegionalImageDistortionResult {
     );
     const resultantVector: [number, number] = Vector.add(...scaledVectors);
 
-    return new ImageDistortionVector(resultantVector);
+    return new RegionalImageDistortionVector(resultantVector);
   }
 
   private getDistortionScores(
