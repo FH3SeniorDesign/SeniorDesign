@@ -15,6 +15,7 @@ import CameraRoll from '@react-native-community/cameraroll';
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
+import {voiceFeedback} from '../feedback/feedback';
 
 const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
 
@@ -28,6 +29,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   const uriString: string = `file://${photoFile.path}`;
   ImageProcessorPlugin.makePrediction(uriString, (res: any) => {
     console.log(res);
+    voiceFeedback(res);
   });
 
   const imageSource: ImageURISource = useMemo(() => {
