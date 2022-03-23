@@ -18,6 +18,7 @@ import 'react-native-reanimated';
 import {runOnJS} from 'react-native-reanimated';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import {voiceFeedback} from '../feedback/feedback';
 import {
   Camera,
   CameraPermissionStatus,
@@ -165,7 +166,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
-    // TODO provide feedback
+    voiceFeedback(result);
   };
 
   const frameProcessor = useFrameProcessor(frame => {
