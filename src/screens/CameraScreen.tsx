@@ -166,7 +166,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
-    voiceFeedback(result);
+    voiceFeedback(imageDistortionResult);
   };
 
   const frameProcessor = useFrameProcessor(frame => {
