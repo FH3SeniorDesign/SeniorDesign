@@ -19,11 +19,6 @@ import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
 import {voiceFeedback} from '../feedback/feedback';
-<<<<<<< HEAD
-=======
-
-const ImageProcessorPlugin = NativeModules.ImageProcessorPlugin;
->>>>>>> fa6b5f6174b6e7c331a280345738e53fb22c8891
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 
@@ -33,7 +28,6 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   const {photoFile} = route.params;
   const uri: string = `file://${photoFile.path}`;
 
-<<<<<<< HEAD
   const evaluateImage = async () => {
     console.log('# evaluteImage');
 
@@ -79,12 +73,6 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
 
   useEffect(() => {
     evaluateImage();
-=======
-  const uriString: string = `file://${photoFile.path}`;
-  ImageProcessorPlugin.makePrediction(uriString, (res: any) => {
-    console.log(res);
-    voiceFeedback(res);
->>>>>>> fa6b5f6174b6e7c331a280345738e53fb22c8891
   });
 
   const imageSource: ImageURISource = useMemo(() => {
