@@ -18,7 +18,6 @@ import 'react-native-reanimated';
 import {runOnJS} from 'react-native-reanimated';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import {voiceFeedback} from '../feedback/feedback';
 import {
   Camera,
   CameraPermissionStatus,
@@ -27,6 +26,7 @@ import {
   useFrameProcessor,
 } from 'react-native-vision-camera';
 import {RootStackParamList} from 'RootStackParamList';
+import {Feedback} from 'utilities/Feedback';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CameraScreen'>;
 
@@ -166,7 +166,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
-    voiceFeedback(result);
+    Feedback.voiceFeedback(imageDistortionResult, 2000);
   };
 
   const frameProcessor = useFrameProcessor(frame => {

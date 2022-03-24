@@ -18,7 +18,7 @@ import {
 import {Icon} from 'react-native-elements';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
-import {voiceFeedback} from '../feedback/feedback';
+import {Feedback} from 'utilities/Feedback';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 
@@ -41,7 +41,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
       'imageDistortionResult:',
       JSON.stringify(imageDistortionResult),
     );
-    voiceFeedback(imageDistortionResult);
+    Feedback.voiceFeedback(imageDistortionResult);
     console.log(
       'descendingDistortions:',
       JSON.stringify(descendingDistortions),
