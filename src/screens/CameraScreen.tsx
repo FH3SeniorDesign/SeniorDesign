@@ -2,10 +2,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {TakePictureButton} from 'components/TakePictureButton';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
-import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
-import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {scanImage} from 'processors/FrameProcessors';
-import {ImageProcessor} from 'processors/ImageProcessor';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
@@ -95,48 +92,10 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
             asset.width != null &&
             asset.height != null
           ) {
-            // Global image evaluation
-            const imageDistortionResult: ImageDistortionResult =
-              await ImageProcessor.evaluateGlobal(asset.uri);
-            const descendingDistortions: [string, number][] =
-              imageDistortionResult.getDescendingDistortions();
-
-            console.log(
-              'imageDistortionResult:',
-              JSON.stringify(imageDistortionResult),
-            );
-            console.log(
-              'descendingDistortions:',
-              JSON.stringify(descendingDistortions),
-            );
-
-            // Regional image evaluation
-            const regionalImageDistortionResult: RegionalImageDistortionResult =
-              await ImageProcessor.evaluateRegions(
-                asset.uri,
-                asset.width,
-                asset.height,
-              );
-            const descendingDistortionVectors: [
-              string,
-              RegionalImageDistortionVector,
-            ][] =
-              regionalImageDistortionResult.getDescendingDistortionVectors();
-
-            console.log(
-              'regionalImageDistortionResult:',
-              JSON.stringify(regionalImageDistortionResult),
-            );
-            console.log(
-              'descendingDistortionVectors:',
-              JSON.stringify(descendingDistortionVectors),
-            );
-
-            // TODO provide feedback
-            Feedback.voiceFeedback(
-              imageDistortionResult,
-              regionalImageDistortionResult,
-            );
+            console.log(asset.uri);
+            navigation.navigate('LibraryImageScreen', {
+              imagePickerResult: asset,
+            });
           }
         }
       })

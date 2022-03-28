@@ -10,6 +10,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Camera, CameraPermissionStatus} from 'react-native-vision-camera';
 import {RootStackParamList} from 'RootStackParamList';
 import {ImagePreviewScreen} from 'screens/ImagePreviewScreen';
+import {LibraryImageScreen} from 'screens/LibraryImageScreen';
 
 export const App = (): JSX.Element => {
   console.log('## Rendering App');
@@ -47,6 +48,10 @@ export const App = (): JSX.Element => {
           <Stack.Screen
             name="ImagePreviewScreen"
             component={ImagePreviewScreen}
+          />
+          <Stack.Screen
+            name="LibraryImageScreen"
+            component={LibraryImageScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
