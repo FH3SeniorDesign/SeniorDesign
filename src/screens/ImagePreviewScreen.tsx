@@ -41,7 +41,6 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
       'imageDistortionResult:',
       JSON.stringify(imageDistortionResult),
     );
-    Feedback.voiceFeedback(imageDistortionResult);
     console.log(
       'descendingDistortions:',
       JSON.stringify(descendingDistortions),
@@ -69,6 +68,10 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     );
 
     // TODO provide feedback
+    Feedback.voiceFeedback(
+      imageDistortionResult,
+      regionalImageDistortionResult,
+    );
   };
 
   useEffect(() => {

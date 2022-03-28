@@ -133,6 +133,10 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
             );
 
             // TODO provide feedback
+            Feedback.voiceFeedback(
+              imageDistortionResult,
+              regionalImageDistortionResult,
+            );
           }
         }
       })
@@ -166,7 +170,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
-    Feedback.voiceFeedback(imageDistortionResult, 2000);
+    Feedback.voiceFeedback(imageDistortionResult, null, 2000);
   };
 
   const frameProcessor = useFrameProcessor(frame => {
