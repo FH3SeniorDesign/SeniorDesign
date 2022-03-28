@@ -13,6 +13,7 @@ import {
   PermissionsAndroid,
   Platform,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
@@ -113,18 +114,31 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
       <View style={StyleSheet.absoluteFill}>
         <Image style={StyleSheet.absoluteFill} source={imageSource} />
       </View>
-      <Icon
-        reverse
-        name="close"
-        onPress={discardImage}
-        accessibilityLabel="Discard Button"
-      />
-      <Icon
-        reverse
-        name="save"
+
+      <TouchableOpacity
         onPress={saveImage}
-        accessibilityLabel="Save Button"
-      />
+        style={styles.button}
+        accessibilityLabel="Save Button">
+        <Icon
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+          reverse
+          name="save"
+          style={styles.icon}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={discardImage}
+        style={styles.button}
+        accessibilityLabel="Discard Button">
+        <Icon
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+          reverse
+          name="close"
+          style={styles.icon}
+        />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -133,5 +147,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+  },
+  button: {
+    alignSelf: 'stretch',
+    height: '50%',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+  },
+  icon: {
+    height: '50%',
   },
 });
