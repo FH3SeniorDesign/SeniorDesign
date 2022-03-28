@@ -30,7 +30,7 @@ public class ImageDistortionModel {
 
     public ImageDistortionModel(Context context) {
         try {
-            MappedByteBuffer tfliteModel = FileUtil.loadMappedFile(context, "ml/mliqa_tflite_mobilenet.tflite");
+            MappedByteBuffer tfliteModel = FileUtil.loadMappedFile(context, "ml/mliqa_resnet50_exp3.tflite");
             this.tflite = new InterpreterFactory().create(tfliteModel, new InterpreterApi.Options());
         } catch (IOException e) {
             Log.e("tflite", "Error reading model", e);
