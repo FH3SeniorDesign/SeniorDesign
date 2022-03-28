@@ -1,4 +1,5 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/Routes.ts
+import {Asset} from 'react-native-image-picker';
 import {PhotoFile} from 'react-native-vision-camera';
 
 export type RootStackParamList = {
@@ -6,5 +7,8 @@ export type RootStackParamList = {
   CameraScreen: undefined;
   ImagePreviewScreen: {
     photoFile: PhotoFile;
+  };
+  LibraryImageScreen: {
+    asset: Asset;
   };
 };

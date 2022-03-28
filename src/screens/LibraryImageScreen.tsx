@@ -1,5 +1,4 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/MediaPage.tsx
-import CameraRoll from '@react-native-community/cameraroll';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
@@ -10,8 +9,6 @@ import {useEffect, useMemo} from 'react';
 import {
   Image,
   ImageURISource,
-  PermissionsAndroid,
-  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -21,13 +18,17 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from 'RootStackParamList';
 import {Feedback} from 'utilities/Feedback';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'LibraryImageScreen'>;
 
-export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
-  console.log('## Rendering ImagePreviewScreen');
+export const LibraryImageScreen = ({navigation, route}: Props): JSX.Element => {
+  console.log('## Rendering LibraryImageScreen');
 
-  const {photoFile} = route.params;
-  const uri: string = `file://${photoFile.path}`;
+  //const {ur} = route.params;
+  const uri: string = route.params.imagePickerResult.uri;
+  const height = route.params.imagePickerResult.height;
+  const width = route.params.imagePickerResult.width;
+
+  console.log(route.params.imagePickerResult);
 
   const evaluateImage = async () => {
     console.log('# evaluteImage');
@@ -49,11 +50,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
 
     // Regional image evaluation
     const regionalImageDistortionResult: RegionalImageDistortionResult =
-      await ImageProcessor.evaluateRegions(
-        uri,
-        photoFile.width,
-        photoFile.height,
-      );
+      await ImageProcessor.evaluateRegions(uri, width, height);
     const descendingDistortionVectors: [
       string,
       RegionalImageDistortionVector,
@@ -86,27 +83,6 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     navigation.replace('CameraScreen');
   };
 
-  const hasAndroidWritePermissions = async (): Promise<boolean> => {
-    const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-    const hasPermission = await PermissionsAndroid.check(permission);
-    if (hasPermission) {
-      return true;
-    }
-    const status = await PermissionsAndroid.request(permission);
-    return status === 'granted';
-  };
-
-  const saveImage = async () => {
-    if (Platform.OS === 'android' && !(await hasAndroidWritePermissions())) {
-      console.log('No permission!');
-      return;
-    }
-
-    console.log('saving photo');
-    CameraRoll.save(uri).catch(console.error);
-    navigation.replace('CameraScreen');
-  };
-
   return (
     <SafeAreaView
       style={styles.container}
@@ -115,18 +91,6 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
         <Image style={StyleSheet.absoluteFill} source={imageSource} />
       </View>
 
-      <TouchableOpacity
-        onPress={saveImage}
-        style={styles.button}
-        accessibilityLabel="Save Button">
-        <Icon
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
-          reverse
-          name="save"
-          style={styles.icon}
-        />
-      </TouchableOpacity>
       <TouchableOpacity
         onPress={discardImage}
         style={styles.button}
@@ -150,11 +114,11 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'stretch',
-    height: '50%',
+    height: '100%',
     alignItems: 'center',
     textAlignVertical: 'center',
   },
   icon: {
-    height: '50%',
+    height: '100%',
   },
 });
