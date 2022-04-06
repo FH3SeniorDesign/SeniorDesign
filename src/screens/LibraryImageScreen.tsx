@@ -45,8 +45,12 @@ export const LibraryImageScreen = ({navigation, route}: Props): JSX.Element => {
     );
     console.log(
       'descendingDistortions:',
-      JSON.stringify(descendingDistortions),
+      JSON.stringify(descendingDistortions), // null, 2 args added for pretty-print
     );
+    console.log('GLOBAL DONE');
+    // console.log();
+    // console.log();
+    // console.log();
 
     // Regional image evaluation
     const regionalImageDistortionResult: RegionalImageDistortionResult =
@@ -64,6 +68,9 @@ export const LibraryImageScreen = ({navigation, route}: Props): JSX.Element => {
       'descendingDistortionVectors:',
       JSON.stringify(descendingDistortionVectors),
     );
+    // console.log('REGIONAL DONE');
+    // console.log('');
+    // console.log('');
 
     // TODO provide feedback
     Feedback.voiceFeedback(

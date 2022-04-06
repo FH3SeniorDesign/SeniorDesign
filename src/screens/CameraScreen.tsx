@@ -55,9 +55,12 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     (photoFile: PhotoFile) => {
       console.log('# previewPicture');
       console.log('photoFile:', photoFile);
-      navigation.navigate('ImagePreviewScreen', {photoFile});
+      navigation.navigate('ImagePreviewScreen', {
+        photoFile,
+        flashEnabled: flash === 'on',
+      });
     },
-    [navigation],
+    [flash, navigation],
   );
 
   const flipCamera = useCallback(() => {
@@ -129,7 +132,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
-    Feedback.voiceFeedback(imageDistortionResult, null, 2000);
+    Feedback.voiceFeedback(imageDistortionResult, null, 2000, flash === 'on');
   };
 
   const frameProcessor = useFrameProcessor(frame => {
@@ -172,12 +175,22 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
       </View>
       <View style={styles.rightButtonRow}>
         {supportsCameraFlipping && (
-          <TouchableOpacity style={styles.button} onPress={flipCamera}>
+          <TouchableOpacity
+            accessibilityLabel={`Camera is ${cameraPosition} facing. Tap to make ${
+              cameraPosition === 'front' ? 'back' : 'front'
+            } facing.`}
+            style={styles.button}
+            onPress={flipCamera}>
             <IonIcon name="camera-reverse" color="white" size={24} />
           </TouchableOpacity>
         )}
         {supportsFlash && (
-          <TouchableOpacity style={styles.button} onPress={toggleFlash}>
+          <TouchableOpacity
+            accessibilityLabel={`Flash button is ${flash}. Tap to turn ${
+              flash === 'on' ? 'off' : 'on'
+            }`}
+            style={styles.button}
+            onPress={toggleFlash}>
             <IonIcon
               name={flash === 'on' ? 'flash' : 'flash-off'}
               color="white"

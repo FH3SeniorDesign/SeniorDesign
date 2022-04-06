@@ -1,3 +1,4 @@
+import {RegionalImageDistortionDirection} from 'constants/RegionalImageDistortionConstants';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
 import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
@@ -38,7 +39,17 @@ import {AccessibilityInfo} from 'react-native';
 //   shaky: 'Shaky Picture',
 // };
 
-const ORIENTATION_REMAP = {
+const ORIENTATION_REMAP: {
+  'top-left': RegionalImageDistortionDirection;
+  top: RegionalImageDistortionDirection;
+  'top-right': RegionalImageDistortionDirection;
+  left: RegionalImageDistortionDirection;
+  center: RegionalImageDistortionDirection;
+  right: RegionalImageDistortionDirection;
+  'bottom-left': RegionalImageDistortionDirection;
+  bottom: RegionalImageDistortionDirection;
+  'bottom-right': RegionalImageDistortionDirection;
+} = {
   'top-left': 'top-right',
   top: 'right',
   'top-right': 'bottom-right',
@@ -50,6 +61,82 @@ const ORIENTATION_REMAP = {
   'bottom-right': 'bottom-left',
 };
 
+const FEEDBACK = {
+  blurry: {
+    'top-left':
+      'Too blurry in top-left region. Object may be too close to camera.',
+    top: 'TODO',
+    'top-right':
+      'Too blurry in bottom-right region. Object may be too close to camera.',
+    left: '',
+    center: 'Too blurry in center region. Try waiting for autofocus.',
+    right: '',
+    'bottom-left':
+      'Too blurry in bottom-left region. Object may be too close to camera.',
+    bottom: 'TODO',
+    'bottom-right':
+      'Too blurry in bottom-right region. Object may be too close to camera.',
+  },
+  shaky: {
+    overall: 'Too shaky. Try steadying camera or waiting for autofocus.',
+  },
+  bright: {
+    'top-left':
+      'Too bright in top-left region. Object may be too close to camera.',
+    top: 'TODO',
+    'top-right':
+      'Too bright in top-right region. Object may be too close to camera.',
+    left: 'TODO',
+    center: 'Too bright in center region. Try adjusting background lighting.',
+    right: 'TODO',
+    'bottom-left':
+      'Too bright in bottom-left region. Object may be too close to camera.',
+    bottom: 'TODO',
+    'bottom-right':
+      'Too bright in bottom-right region. Object may be too close to camera.',
+  },
+  dark: {
+    'top-left':
+      'Too dark in top-left region. Finger may be obstructing camera view.',
+    top: 'TODO',
+    'top-right':
+      'Too dark in top-right region. Finger may be obstructing camera view.',
+    left: 'TODO',
+    center: 'TODO',
+    right: 'TODO',
+    'bottom-left':
+      'Too dark in bottom-left region. Finger may be obstructing camera view.',
+    bottom: 'TODO',
+    'bottom-right':
+      'Too dark in bottom-right region. Finger may be obstructing camera view.',
+  },
+  grainy: {
+    overall: 'Too grainy. Try adjusting background lighting.',
+  },
+  // none: {
+  //   'top-left': 'TODO',
+  //   top: 'TODO',
+  //   'top-right': 'TODO',
+  //   left: 'TODO',
+  //   center: 'TODO',
+  //   right: 'TODO',
+  //   'bottom-left': 'TODO',
+  //   bottom: 'TODO',
+  //   'bottom-right': 'TODO',
+  // },
+  // other: {
+  //   'top-left': 'TODO',
+  //   top: 'TODO',
+  //   'top-right': 'TODO',
+  //   left: 'TODO',
+  //   center: 'TODO',
+  //   right: 'TODO',
+  //   'bottom-left': 'TODO',
+  //   bottom: 'TODO',
+  //   'bottom-right': 'TODO',
+  // },
+};
+
 let prevTime = new Date();
 
 export class Feedback {
@@ -57,6 +144,7 @@ export class Feedback {
     imageDistortionResult: ImageDistortionResult,
     regionalImageDistortionResult: RegionalImageDistortionResult | null,
     timeDelayMS: number = 0,
+    flashEnabled: boolean = false,
   ) {
     const deltaT = new Date().getTime() - prevTime.getTime();
     const descendingDistortions =
@@ -68,18 +156,20 @@ export class Feedback {
       if (regionalImageDistortionResult === null) {
         for (const [distortion, value] of descendingDistortions) {
           switch (distortion) {
-            // case 'blurry':
-            //   if (value >= 0.75) {
-            //     AccessibilityInfo.announceForAccessibility('High blurriness!');
-            //   } else if (value >= 0.55) {
-            //     AccessibilityInfo.announceForAccessibility('Medium blurriness!');
-            //   } else if (value >= 0.2) {
-            //     AccessibilityInfo.announceForAccessibility('Low blurriness!');
-            //   }
+            case 'blurry':
+              if (value >= 0.3) {
+                AccessibilityInfo.announceForAccessibility('High blurriness!');
+              } else if (value >= 0.55) {
+                AccessibilityInfo.announceForAccessibility(
+                  'Medium blurriness!',
+                );
+              } else if (value >= 0.3) {
+                AccessibilityInfo.announceForAccessibility('Low blurriness!');
+              }
 
-            //   return;
+              return;
             case 'bright':
-              if (value >= 0.75) {
+              if (value >= 0.3) {
                 AccessibilityInfo.announceForAccessibility('High brightness!');
               } else if (value >= 0.3) {
                 AccessibilityInfo.announceForAccessibility(
@@ -90,36 +180,38 @@ export class Feedback {
               }
 
               break;
-            // case 'dark':
-            //   if (value >= 0.75) {
-            //     AccessibilityInfo.announceForAccessibility('High darkness!');
-            //   } else if (value >= 0.55) {
-            //     AccessibilityInfo.announceForAccessibility('Medium darkness!');
-            //   } else if (value >= 0.3) {
-            //     AccessibilityInfo.announceForAccessibility('Low darkness!');
-            //   }
+            case 'dark':
+              if (value >= 0.3) {
+                AccessibilityInfo.announceForAccessibility('High darkness!');
+              } else if (value >= 0.55) {
+                AccessibilityInfo.announceForAccessibility('Medium darkness!');
+              } else if (value >= 0.3) {
+                AccessibilityInfo.announceForAccessibility('Low darkness!');
+              }
 
-            //   break;
-            // case 'grainy':
-            //   if (value >= 0.75) {
-            //     AccessibilityInfo.announceForAccessibility('High graininess!');
-            //   } else if (value >= 0.55) {
-            //     AccessibilityInfo.announceForAccessibility('Medium graininess!');
-            //   } else if (value >= 0.2) {
-            //     AccessibilityInfo.announceForAccessibility('Low graininess!');
-            //   }
+              break;
+            case 'grainy':
+              if (value >= 0.3) {
+                AccessibilityInfo.announceForAccessibility('High graininess!');
+              } else if (value >= 0.55) {
+                AccessibilityInfo.announceForAccessibility(
+                  'Medium graininess!',
+                );
+              } else if (value >= 0.2) {
+                AccessibilityInfo.announceForAccessibility('Low graininess!');
+              }
 
-            //   break
-            // case 'shaky':
-            //   if (value >= 0.75) {
-            //     AccessibilityInfo.announceForAccessibility('High shakiness!');
-            //   } else if (value >= 0.55) {
-            //     AccessibilityInfo.announceForAccessibility('Medium shakiness!');
-            //   } else if (value >= 0.2) {
-            //     AccessibilityInfo.announceForAccessibility('Low shakiness!');
-            //   }
+              break;
+            case 'shaky':
+              if (value >= 0.3) {
+                AccessibilityInfo.announceForAccessibility('High shakiness!');
+              } else if (value >= 0.55) {
+                AccessibilityInfo.announceForAccessibility('Medium shakiness!');
+              } else if (value >= 0.2) {
+                AccessibilityInfo.announceForAccessibility('Low shakiness!');
+              }
 
-            //   break
+              break;
             default:
               break;
           }
@@ -131,85 +223,56 @@ export class Feedback {
         for (const distortionVector of descendingDistortionVectors) {
           const [distortion, vector]: [string, RegionalImageDistortionVector] =
             distortionVector;
-          const rotatedDirection = ORIENTATION_REMAP[vector.direction];
+          const rotatedDirection: RegionalImageDistortionDirection =
+            ORIENTATION_REMAP[vector.direction];
 
           switch (distortion) {
             case 'blurryVector':
-              if (vector.magnitude >= 0.75) {
+              if (vector.magnitude >= 0.3) {
                 AccessibilityInfo.announceForAccessibility(
-                  `High blurriness in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.55) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Medium blurriness in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.2) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Low blurriness in ${rotatedDirection} quadrant!`,
+                  FEEDBACK.blurry[rotatedDirection],
                 );
               }
 
               break;
             case 'brightVector':
-              if (vector.magnitude >= 0.75) {
+              if (vector.magnitude >= 0.3) {
                 AccessibilityInfo.announceForAccessibility(
-                  `High brightness in ${rotatedDirection} quadrant!`,
+                  FEEDBACK.bright[rotatedDirection],
                 );
-              } else if (vector.magnitude >= 0.55) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Medium brightness in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.2) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Low brightness in ${rotatedDirection} quadrant!`,
-                );
+                if (flashEnabled) {
+                  AccessibilityInfo.announceForAccessibility(
+                    'Try turning off flash.',
+                  );
+                }
               }
 
               break;
             case 'darkVector':
-              if (vector.magnitude >= 0.75) {
+              if (vector.magnitude >= 0.3) {
                 AccessibilityInfo.announceForAccessibility(
-                  `High darkness in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.55) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Medium darkness in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.2) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Low darkness in ${rotatedDirection} quadrant!`,
+                  FEEDBACK.dark[rotatedDirection],
                 );
               }
 
               break;
             case 'grainyVector':
-              if (vector.magnitude >= 0.75) {
+              if (vector.magnitude >= 0.3) {
                 AccessibilityInfo.announceForAccessibility(
-                  `High graininess in ${rotatedDirection} quadrant!`,
+                  FEEDBACK.grainy.overall,
                 );
-              } else if (vector.magnitude >= 0.55) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Medium graininess in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.2) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Low graininess in ${rotatedDirection} quadrant!`,
-                );
+                if (!flashEnabled) {
+                  AccessibilityInfo.announceForAccessibility(
+                    'Try turning on flash.',
+                  );
+                }
               }
 
               break;
             case 'shakyVector':
-              if (vector.magnitude >= 0.75) {
+              if (vector.magnitude >= 0.3) {
                 AccessibilityInfo.announceForAccessibility(
-                  `High shakiness in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.55) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Medium shakiness in ${rotatedDirection} quadrant!`,
-                );
-              } else if (vector.magnitude >= 0.2) {
-                AccessibilityInfo.announceForAccessibility(
-                  `Low shakiness in ${rotatedDirection} quadrant!`,
+                  FEEDBACK.shaky.overall,
                 );
               }
 

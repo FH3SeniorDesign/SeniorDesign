@@ -7,6 +7,7 @@ export type RootStackParamList = {
   CameraScreen: undefined;
   ImagePreviewScreen: {
     photoFile: PhotoFile;
+    flashEnabled: boolean;
   };
   LibraryImageScreen: {
     asset: Asset;

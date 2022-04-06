@@ -26,7 +26,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
   console.log('## Rendering ImagePreviewScreen');
 
-  const {photoFile} = route.params;
+  const {photoFile, flashEnabled} = route.params;
   const uri: string = `file://${photoFile.path}`;
 
   const evaluateImage = async () => {
@@ -46,6 +46,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
       'descendingDistortions:',
       JSON.stringify(descendingDistortions),
     );
+    console.log('GLOBAL DONE\n\n');
 
     // Regional image evaluation
     const regionalImageDistortionResult: RegionalImageDistortionResult =
@@ -67,11 +68,14 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
       'descendingDistortionVectors:',
       JSON.stringify(descendingDistortionVectors),
     );
+    console.log('REGIONAL DONE\n\n');
 
     // TODO provide feedback
     Feedback.voiceFeedback(
       imageDistortionResult,
       regionalImageDistortionResult,
+      0,
+      flashEnabled,
     );
   };
 
