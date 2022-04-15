@@ -13,7 +13,7 @@ class ImageProcessorPlugin: NSObject {
   
   private var imageModel: ImageModel = ImageModel()
   
-  @objc func makePrediction(_ path: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
+  @objc func makePrediction(_ path: String, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) -> Void {
     NSLog("# ImageProcessorPlugin.makePrediction(path=%@)", path)
     
     let formattedPath = String(path.suffix(path.count - 7))

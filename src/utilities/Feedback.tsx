@@ -1,8 +1,8 @@
-import {RegionalImageDistortionDirection} from 'constants/RegionalImageDistortionConstants';
-import {ImageDistortionResult} from 'models/ImageDistortionResult';
-import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
-import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
-import {AccessibilityInfo} from 'react-native';
+import { RegionalImageDistortionDirection } from 'constants/RegionalImageDistortionConstants';
+import { ImageDistortionResult } from 'models/ImageDistortionResult';
+import { RegionalImageDistortionResult } from 'models/RegionalImageDistortionResult';
+import { RegionalImageDistortionVector } from 'models/RegionalImageDistortionVector';
+import { AccessibilityInfo } from 'react-native';
 // import Tts from 'react-native-tts';
 
 // const THRESHOLDS = {
@@ -63,78 +63,278 @@ const ORIENTATION_REMAP: {
 
 const FEEDBACK = {
   blurry: {
-    'top-left':
-      'Too blurry in top-left region. Object may be too close to camera.',
-    top: 'TODO',
+    'top-left': {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
+    top: {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
     'top-right':
-      'Too blurry in bottom-right region. Object may be too close to camera.',
-    left: '',
-    center: 'Too blurry in center region. Try waiting for autofocus.',
-    right: '',
-    'bottom-left':
-      'Too blurry in bottom-left region. Object may be too close to camera.',
-    bottom: 'TODO',
-    'bottom-right':
-      'Too blurry in bottom-right region. Object may be too close to camera.',
+    {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
+    left: {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
+    center: {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
+    right: {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
+    'bottom-left': {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
+    bottom: {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
+    'bottom-right': {
+      low: 'Low blurry in top-left region. Object may be too close to camera.',
+      high: 'High blurry in top-left region. Object may be too close to camera.'
+    },
   },
   shaky: {
-    overall: 'Too shaky. Try steadying camera or waiting for autofocus.',
+    'top-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    top: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'top-right':
+    {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    left: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    center: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    right: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    bottom: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-right': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
   },
   bright: {
-    'top-left':
-      'Too bright in top-left region. Object may be too close to camera.',
-    top: 'TODO',
+    'top-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    top: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
     'top-right':
-      'Too bright in top-right region. Object may be too close to camera.',
-    left: 'TODO',
-    center: 'Too bright in center region. Try adjusting background lighting.',
-    right: 'TODO',
-    'bottom-left':
-      'Too bright in bottom-left region. Object may be too close to camera.',
-    bottom: 'TODO',
-    'bottom-right':
-      'Too bright in bottom-right region. Object may be too close to camera.',
+    {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    left: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    center: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    right: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    bottom: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-right': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
   },
   dark: {
-    'top-left':
-      'Too dark in top-left region. Finger may be obstructing camera view.',
-    top: 'TODO',
+    'top-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    top: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
     'top-right':
-      'Too dark in top-right region. Finger may be obstructing camera view.',
-    left: 'TODO',
-    center: 'TODO',
-    right: 'TODO',
-    'bottom-left':
-      'Too dark in bottom-left region. Finger may be obstructing camera view.',
-    bottom: 'TODO',
-    'bottom-right':
-      'Too dark in bottom-right region. Finger may be obstructing camera view.',
+    {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    left: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    center: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    right: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    bottom: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-right': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
   },
   grainy: {
-    overall: 'Too grainy. Try adjusting background lighting.',
+    'top-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    top: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'top-right':
+    {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    left: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    center: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    right: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    bottom: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-right': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
   },
-  // none: {
-  //   'top-left': 'TODO',
-  //   top: 'TODO',
-  //   'top-right': 'TODO',
-  //   left: 'TODO',
-  //   center: 'TODO',
-  //   right: 'TODO',
-  //   'bottom-left': 'TODO',
-  //   bottom: 'TODO',
-  //   'bottom-right': 'TODO',
-  // },
-  // other: {
-  //   'top-left': 'TODO',
-  //   top: 'TODO',
-  //   'top-right': 'TODO',
-  //   left: 'TODO',
-  //   center: 'TODO',
-  //   right: 'TODO',
-  //   'bottom-left': 'TODO',
-  //   bottom: 'TODO',
-  //   'bottom-right': 'TODO',
-  // },
+  none: {
+    'top-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    top: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'top-right':
+    {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    left: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    center: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    right: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    bottom: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-right': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+  },
+  other: {
+    'top-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    top: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'top-right':
+    {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    left: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    center: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    right: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-left': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    bottom: {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+    'bottom-right': {
+      low: 'It is an undeniable FACT that we need better feedback!',
+      high: 'It is an undeniable FACT that we need better feedback!'
+    },
+  },
 };
 
 let prevTime = new Date();
@@ -157,35 +357,25 @@ export class Feedback {
         for (const [distortion, value] of descendingDistortions) {
           switch (distortion) {
             case 'blurry':
-              if (value >= 0.3) {
+              if (value >= 0.6) {
                 AccessibilityInfo.announceForAccessibility('High blurriness!');
-              } else if (value >= 0.55) {
-                AccessibilityInfo.announceForAccessibility(
-                  'Medium blurriness!',
-                );
-              } else if (value >= 0.3) {
+              } else if (value >= 0.4) {
                 AccessibilityInfo.announceForAccessibility('Low blurriness!');
               }
 
               return;
             case 'bright':
-              if (value >= 0.3) {
+              if (value >= 0.4) {
                 AccessibilityInfo.announceForAccessibility('High brightness!');
-              } else if (value >= 0.3) {
-                AccessibilityInfo.announceForAccessibility(
-                  'Medium brightness!',
-                );
               } else if (value >= 0.25) {
                 AccessibilityInfo.announceForAccessibility('Low brightness!');
               }
 
               break;
             case 'dark':
-              if (value >= 0.3) {
+              if (value >= 0.5) {
                 AccessibilityInfo.announceForAccessibility('High darkness!');
-              } else if (value >= 0.55) {
-                AccessibilityInfo.announceForAccessibility('Medium darkness!');
-              } else if (value >= 0.3) {
+              } else if (value >= 0.25) {
                 AccessibilityInfo.announceForAccessibility('Low darkness!');
               }
 
@@ -203,10 +393,8 @@ export class Feedback {
 
               break;
             case 'shaky':
-              if (value >= 0.3) {
+              if (value >= 0.4) {
                 AccessibilityInfo.announceForAccessibility('High shakiness!');
-              } else if (value >= 0.55) {
-                AccessibilityInfo.announceForAccessibility('Medium shakiness!');
               } else if (value >= 0.2) {
                 AccessibilityInfo.announceForAccessibility('Low shakiness!');
               }
@@ -228,17 +416,30 @@ export class Feedback {
 
           switch (distortion) {
             case 'blurryVector':
-              if (vector.magnitude >= 0.3) {
+              if (vector.magnitude >= 0.6) {
                 AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.blurry[rotatedDirection],
+                  FEEDBACK.blurry[rotatedDirection].high,
+                );
+              } else if (vector.magnitude >= 0.4) {
+                AccessibilityInfo.announceForAccessibility(
+                  FEEDBACK.blurry[rotatedDirection].low,
                 );
               }
 
               break;
             case 'brightVector':
-              if (vector.magnitude >= 0.3) {
+              if (vector.magnitude >= 0.4) {
                 AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.bright[rotatedDirection],
+                  FEEDBACK.bright[rotatedDirection].high,
+                );
+                if (flashEnabled) {
+                  AccessibilityInfo.announceForAccessibility(
+                    'Try turning off flash.',
+                  );
+                }
+              } else if (vector.magnitude >= 0.25) {
+                AccessibilityInfo.announceForAccessibility(
+                  FEEDBACK.bright[rotatedDirection].low,
                 );
                 if (flashEnabled) {
                   AccessibilityInfo.announceForAccessibility(
@@ -249,18 +450,34 @@ export class Feedback {
 
               break;
             case 'darkVector':
-              if (vector.magnitude >= 0.3) {
+              if (vector.magnitude >= 0.5) {
                 AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.dark[rotatedDirection],
+                  FEEDBACK.dark[rotatedDirection].high,
+                );
+              } else if (vector.magnitude >= 0.25) {
+                AccessibilityInfo.announceForAccessibility(
+                  FEEDBACK.dark[rotatedDirection].low,
                 );
               }
 
               break;
             case 'grainyVector':
-              if (vector.magnitude >= 0.3) {
+              if (vector.magnitude >= 0.6) {
                 AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.grainy.overall,
+                  FEEDBACK.grainy[rotatedDirection].high,
                 );
+
+                if (!flashEnabled) {
+                  AccessibilityInfo.announceForAccessibility(
+                    'Try turning on flash.',
+                  );
+                }
+              }
+              else if (vector.magnitude >= 0.4) {
+                AccessibilityInfo.announceForAccessibility(
+                  FEEDBACK.grainy[rotatedDirection].low,
+                );
+
                 if (!flashEnabled) {
                   AccessibilityInfo.announceForAccessibility(
                     'Try turning on flash.',
@@ -270,9 +487,13 @@ export class Feedback {
 
               break;
             case 'shakyVector':
-              if (vector.magnitude >= 0.3) {
+              if (vector.magnitude >= 0.6) {
                 AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.shaky.overall,
+                  FEEDBACK.shaky[rotatedDirection].high,
+                );
+              } else if (vector.magnitude >= 0.4) {
+                AccessibilityInfo.announceForAccessibility(
+                  FEEDBACK.shaky[rotatedDirection].low,
                 );
               }
 

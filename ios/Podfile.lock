@@ -283,7 +283,7 @@ PODS:
     - React-jsi (= 0.67.1)
     - React-logger (= 0.67.1)
     - React-perflogger (= 0.67.1)
-  - RNReanimated (2.4.1):
+  - RNReanimated (2.5.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -323,7 +323,9 @@ PODS:
     - TensorFlowLiteSwift/Core (= 2.7.0)
   - TensorFlowLiteSwift/Core (2.7.0):
     - TensorFlowLiteC (= 2.7.0)
-  - VisionCamera (2.12.1):
+  - TextToSpeech (4.1.0):
+    - React
+  - VisionCamera (2.13.0):
     - React
     - React-callinvoker
     - React-Core
@@ -369,6 +371,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TensorFlowLiteSwift
+  - TextToSpeech (from `../node_modules/react-native-tts`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -451,6 +454,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  TextToSpeech:
+    :path: "../node_modules/react-native-tts"
   VisionCamera:
     :path: "../node_modules/react-native-vision-camera"
   Yoga:
@@ -491,12 +496,13 @@ SPEC CHECKSUMS:
   React-RCTVibration: 19c012d1202df46bafbe49268a346f6b3edadfdd
   React-runtimeexecutor: 2c92a8bddd1a3e72c7513d1e74235c2d9c84875c
   ReactCommon: 2e816fad39f65f2a94a5999d5be463a6b620dcf6
-  RNReanimated: 32c91e28f5780937b8efc07ddde1bab8d373fe0b
+  RNReanimated: 190b6930d5d94832061278e1070bbe313e50c830
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   TensorFlowLiteC: 50d75ed3640c15dcfbaf88ca4326297b445e00a1
   TensorFlowLiteSwift: fe99748dc3d58ae08bd2ff38658e3ade7038670f
-  VisionCamera: b8d94722045dac32e70d54b5ea1d4062bfbdef10
+  TextToSpeech: b3aa777ff5585705f179c0a2436bfd0926d1716e
+  VisionCamera: f6ebc7a6be166f3cd5744972b9ae394ca15a5145
   Yoga: 5cbf25add73edb290e1067017690f7ebf56c5468
 
 PODFILE CHECKSUM: 826a226cff1755c36092ad7a33b87c7fa511f8bd
