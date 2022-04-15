@@ -5,7 +5,13 @@ import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   Asset,
   ImagePickerResponse,
@@ -132,7 +138,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
-    Feedback.voiceFeedback(imageDistortionResult, null, 2000, flash === 'on');
+    Feedback.voiceFeedback(imageDistortionResult, null, 4000, flash === 'on');
   };
 
   const frameProcessor = useFrameProcessor(frame => {
@@ -227,6 +233,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: 20,
     // bottom: SAFE_AREA_PADDING.paddingBottom,
+  },
+  item: {
+    flex: 1,
+    height: 160,
+    margin: 1,
+  },
+  list: {
+    flex: 1,
   },
   button: {
     marginBottom: 15,
