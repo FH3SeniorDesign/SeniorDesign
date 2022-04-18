@@ -6,10 +6,8 @@ import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResul
 import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {ImageProcessor} from 'processors/ImageProcessor';
 import * as React from 'react';
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {
-  Image,
-  ImageURISource,
   PermissionsAndroid,
   Platform,
   StyleSheet,
@@ -83,9 +81,6 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     evaluateImage();
   });
 
-  const imageSource: ImageURISource = useMemo(() => {
-    return {uri};
-  }, [uri]);
   const discardImage = () => {
     navigation.replace('CameraScreen');
   };
@@ -115,8 +110,25 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     <SafeAreaView
       style={styles.container}
       accessibilityLabel="Image Preview Screen">
-      <View style={StyleSheet.absoluteFill}>
-        <Image style={StyleSheet.absoluteFill} source={imageSource} />
+      <View style={[StyleSheet.absoluteFill, {flexDirection: 'row'}]}>
+        <View
+          style={[StyleSheet.absoluteFill, {flexDirection: 'column', flex: 1}]}>
+          <View style={{flex: 1, borderBottomWidth: 1}} />
+          <View style={{flex: 1, borderBottomWidth: 1}} />
+          <View style={{flex: 1}} />
+        </View>
+        <View
+          style={[StyleSheet.absoluteFill, {flexDirection: 'column', flex: 1}]}>
+          <View style={{flex: 1, borderBottomWidth: 1}} />
+          <View style={{flex: 1, borderBottomWidth: 1}} />
+          <View style={{flex: 1}} />
+        </View>
+        <View
+          style={[StyleSheet.absoluteFill, {flexDirection: 'column', flex: 1}]}>
+          <View style={{flex: 1, borderBottomWidth: 1}} />
+          <View style={{flex: 1, borderBottomWidth: 1}} />
+          <View style={{flex: 1}} />
+        </View>
       </View>
 
       <TouchableOpacity
