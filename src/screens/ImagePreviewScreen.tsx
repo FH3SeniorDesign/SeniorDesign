@@ -1,31 +1,37 @@
 // Reference: https://github.com/mrousavy/react-native-vision-camera/blob/main/example/src/MediaPage.tsx
 import CameraRoll from '@react-native-community/cameraroll';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {ImageDistortionResult} from 'models/ImageDistortionResult';
-import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
-import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
-import {ImageProcessor} from 'processors/ImageProcessor';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ImageDistortionResult } from 'models/ImageDistortionResult';
+import { RegionalImageDistortionResult } from 'models/RegionalImageDistortionResult';
+import { RegionalImageDistortionVector } from 'models/RegionalImageDistortionVector';
+import { ImageProcessor } from 'processors/ImageProcessor';
 import * as React from 'react';
-import {useEffect} from 'react';
+import { useEffect, useMemo } from 'react';
 import {
+  Dimensions,
+  Image,
+  ImageURISource,
   PermissionsAndroid,
   Platform,
   StyleSheet,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {Icon} from 'react-native-elements';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {RootStackParamList} from 'RootStackParamList';
-import {Feedback} from 'utilities/Feedback';
+import { Icon } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { RootStackParamList } from 'RootStackParamList';
+import { Feedback } from 'utilities/Feedback';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ImagePreviewScreen'>;
 
-export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
+export const ImagePreviewScreen = ({ navigation, route }: Props): JSX.Element => {
   console.log('## Rendering ImagePreviewScreen');
 
-  const {photoFile, flashEnabled} = route.params;
+  const { photoFile, flashEnabled } = route.params;
   const uri: string = `file://${photoFile.path}`;
+  const imageSource: ImageURISource = useMemo(() => {
+    return { uri };
+  }, [uri]);
 
   const evaluateImage = async () => {
     console.log('# evaluteImage');
@@ -110,24 +116,37 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     <SafeAreaView
       style={styles.container}
       accessibilityLabel="Image Preview Screen">
-      <View style={[StyleSheet.absoluteFill, {flexDirection: 'row'}]}>
-        <View
-          style={[StyleSheet.absoluteFill, {flexDirection: 'column', flex: 1}]}>
-          <View style={{flex: 1, borderBottomWidth: 1}} />
-          <View style={{flex: 1, borderBottomWidth: 1}} />
-          <View style={{flex: 1}} />
+      <View style={[StyleSheet.absoluteFill, { backgroundColor: 'black' }]}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={{ height: Dimensions.get('window').width * 4 / 3 }}>
+            <Image style={StyleSheet.absoluteFill} source={imageSource} />
+          </View>
         </View>
-        <View
-          style={[StyleSheet.absoluteFill, {flexDirection: 'column', flex: 1}]}>
-          <View style={{flex: 1, borderBottomWidth: 1}} />
-          <View style={{flex: 1, borderBottomWidth: 1}} />
-          <View style={{flex: 1}} />
-        </View>
-        <View
-          style={[StyleSheet.absoluteFill, {flexDirection: 'column', flex: 1}]}>
-          <View style={{flex: 1, borderBottomWidth: 1}} />
-          <View style={{flex: 1, borderBottomWidth: 1}} />
-          <View style={{flex: 1}} />
+      </View>
+      <View style={StyleSheet.absoluteFill}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={{ height: Dimensions.get('window').width * 4 / 3 }}>
+            <View style={[{ flex: 1, flexDirection: 'column', backgroundColor: 'transparent' }]}>
+              <View
+                style={[{ flexDirection: 'row', flex: 1, borderBottomWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }]}>
+                <View style={{ flex: 1, borderRightWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }} />
+                <View style={{ flex: 1, borderRightWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }} />
+                <View style={{ flex: 1, backgroundColor: 'transparent' }} />
+              </View>
+              <View
+                style={[{ flexDirection: 'row', flex: 1, borderBottomWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }]}>
+                <View style={{ flex: 1, borderRightWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }} />
+                <View style={{ flex: 1, borderRightWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }} />
+                <View style={{ flex: 1, backgroundColor: 'transparent' }} />
+              </View>
+              <View
+                style={[{ flexDirection: 'row', flex: 1, backgroundColor: 'transparent' }]}>
+                <View style={{ flex: 1, borderRightWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }} />
+                <View style={{ flex: 1, borderRightWidth: 1, borderColor: 'rgba(255, 255, 255, 0.5)', backgroundColor: 'transparent' }} />
+                <View style={{ flex: 1, backgroundColor: 'transparent' }} />
+              </View>
+            </View>
+          </View>
         </View>
       </View>
 
@@ -140,20 +159,22 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
           importantForAccessibility="no-hide-descendants"
           reverse
           name="save"
-          style={styles.icon}
+          style={{}}
         />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={discardImage}
         style={styles.button}
         accessibilityLabel="Discard Button">
-        <Icon
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
-          reverse
-          name="close"
-          style={styles.icon}
-        />
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <Icon
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no-hide-descendants"
+            reverse
+            name="close"
+          />
+        </View>
+
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -169,8 +190,5 @@ const styles = StyleSheet.create({
     height: '50%',
     alignItems: 'center',
     textAlignVertical: 'center',
-  },
-  icon: {
-    height: '50%',
-  },
+  }
 });

@@ -5,7 +5,7 @@ import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
+import {Dimensions, StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
 import {
   Asset,
   ImagePickerResponse,
@@ -132,7 +132,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     console.log('imageDistortionResult:', imageDistortionResult);
     console.log('descendingDistortions:', descendingDistortions);
 
-    Feedback.voiceFeedback(imageDistortionResult, null, 4000, flash === 'on');
+    Feedback.voiceFeedback(imageDistortionResult, null, 7000, flash === 'on');
   };
 
   const frameProcessor = useFrameProcessor(frame => {
@@ -155,15 +155,19 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
   return (
     <SafeAreaView style={styles.container} accessibilityLabel="Camera Screen">
       <View style={StyleSheet.absoluteFill}>
-        <Camera
-          ref={cameraRef}
-          style={StyleSheet.absoluteFill}
-          device={device}
-          isActive={true}
-          photo={true}
-          enableZoomGesture={true}
-          frameProcessor={feedbackEnabled ? frameProcessor : undefined}
-        />
+        <View style={{marginTop: '30%'}}>
+          <View style={{height: Dimensions.get('window').width * 4 / 3}}>
+            <Camera
+              ref={cameraRef}
+              style={StyleSheet.absoluteFill}
+              device={device}
+              isActive={true}
+              photo={true}
+              enableZoomGesture={true}
+              frameProcessor={feedbackEnabled ? frameProcessor : undefined}
+            />
+          </View>
+        </View>
       </View>
       <View style={styles.captureButton}>
         <TakePictureButton
