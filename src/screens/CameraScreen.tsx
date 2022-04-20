@@ -126,11 +126,13 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
 
     const imageDistortionResult: ImageDistortionResult =
       ImageDistortionResult.from(resultObject);
-    const descendingDistortions: [string, number][] =
-      imageDistortionResult.getDescendingDistortions();
 
-    console.log('imageDistortionResult:', imageDistortionResult);
-    console.log('descendingDistortions:', descendingDistortions);
+    //  const descendingDistortions: [string, number][] =
+    //  imageDistortionResult.getDescendingDistortions();
+
+    //console.log('imageDistortionResult:', imageDistortionResult);
+    //console.log('descendingDistortions:', descendingDistortions);
+    //console.log(flash);
 
     Feedback.voiceFeedback(imageDistortionResult, null, 4000, flash === 'on');
   };

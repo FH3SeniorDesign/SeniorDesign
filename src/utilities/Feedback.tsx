@@ -1,7 +1,5 @@
-import {RegionalImageDistortionDirection} from 'constants/RegionalImageDistortionConstants';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
-import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {AccessibilityInfo} from 'react-native';
 // import Tts from 'react-native-tts';
 
@@ -39,6 +37,7 @@ import {AccessibilityInfo} from 'react-native';
 //   shaky: 'Shaky Picture',
 // };
 
+/*
 const ORIENTATION_REMAP: {
   'top-left': RegionalImageDistortionDirection;
   top: RegionalImageDistortionDirection;
@@ -98,44 +97,6 @@ const FEEDBACK = {
     'bottom-right': {
       low: 'The image is blurry in the bottom-right region, try centering object in screen',
       high: 'The image is blurry in the bottom-right region, try centering object in screen',
-    },
-  },
-  shaky: {
-    'top-left': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    top: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'top-right': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    left: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    center: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    right: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'bottom-left': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    bottom: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'bottom-right': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
     },
   },
   bright: {
@@ -286,83 +247,19 @@ const FEEDBACK = {
         'The bottom-right region of the image is a really dark, try turning on your flash',
     },
   },
-  none: {
-    'top-left': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    top: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'top-right': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    left: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    center: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    right: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'bottom-left': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    bottom: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'bottom-right': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
+  grainy: {
+    overall: {
+      low: 'The image is a bit grainy, try increasing background lighting',
+      high: 'The image is very grainy, try increasing background lighting',
+      lflash: 'The image is a bit grainy, try turning off your flash',
+      hflash: 'The image is very grainy, try turning off your flash',
     },
   },
-  other: {
-    'top-left': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    top: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'top-right': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    left: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    center: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    right: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'bottom-left': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    bottom: {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-    'bottom-right': {
-      low: 'It is an undeniable FACT that we need better feedback!',
-      high: 'It is an undeniable FACT that we need better feedback!',
-    },
-  },
-};
+};*/
+
+let DIST_MAP = new Map();
+let LOW_DIST_IDX = 0;
+let HIGH_DIST_IDX = 1;
 
 let prevTime = new Date();
 
@@ -374,216 +271,186 @@ export class Feedback {
     flashEnabled: boolean = false,
   ) {
     const deltaT = new Date().getTime() - prevTime.getTime();
-    const descendingDistortions =
-      imageDistortionResult.getDescendingDistortions();
 
+    DIST_MAP.set('dark', [0.15, 0.45]);
+    DIST_MAP.set('blurry', [0.4, 0.6]);
+    DIST_MAP.set('grainy', [0.1875, 0.1875]);
+    DIST_MAP.set('bright', [0.3, 0.45]);
+    DIST_MAP.set('shaky', [0.25, 0.4]);
+    console.log(flashEnabled);
     if (deltaT >= timeDelayMS) {
       prevTime = new Date();
 
-      if (regionalImageDistortionResult === null) {
-        for (const [distortion, value] of descendingDistortions) {
-          switch (distortion) {
-            case 'bright':
-              if (value >= 0.4) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    'Image is really bright, try turning off flash!',
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    'Image is a little bright, try decreasing the background lighting!',
-                  );
-                }
-              } else if (value >= 0.18) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    'Image is a little bright, try turning off flash!',
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    'Image is really bright, try decreasing background lighting!',
-                  );
-                }
-              }
+      // First None Check
+      if (imageDistortionResult.none > 0.25) {
+        AccessibilityInfo.announceForAccessibility('Image looks good!');
+        return;
+      }
+      const DIST_ORDERING = ['bright', 'dark', 'blurry', 'shaky', 'grainy'];
+      // Distortion For loop,
+      console.log('FOR LOOP');
+      var dist_detected = false;
+      console.log(imageDistortionResult);
+      for (const distortion of DIST_ORDERING) {
+        let value = imageDistortionResult[distortion];
+        console.log('VALUE: ', value, distortion);
 
-              break;
-            case 'dark':
-              if (value >= 0.5) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    'The image is a really dark, try turning on flash!',
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    'The image is really dark. Try increasing background lighting or checking that something isn’t covering the lens!',
-                  );
-                }
-              } else if (value >= 0.15) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    'Image is a little dark, try increasing the background lighting!',
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    'Image is a little dark, try turning on flash!',
-                  );
-                }
-              }
-
-              break;
-
-            case 'blurry':
-              if (value >= 0.6) {
-                AccessibilityInfo.announceForAccessibility(
-                  'The image is blurry, try either stabilizing your phone or stepping away from the object!',
-                );
-              } else if (value >= 0.4) {
-                AccessibilityInfo.announceForAccessibility(
-                  'The image seems to be a bit blurry , try stabilizing your phone!',
-                );
-              }
-              break;
-
-            case 'grainy':
-              if (value >= 0.3) {
-                AccessibilityInfo.announceForAccessibility(
-                  'The image is grainy, try turning on your flash or increasing background lighting!',
-                );
-              } else if (value >= 0.2) {
-                AccessibilityInfo.announceForAccessibility(
-                  'The image is grainy, try turning on your flash or increasing background lighting!',
-                );
-              }
-
-              break;
-            case 'shaky':
-              if (value >= 0.4) {
-                AccessibilityInfo.announceForAccessibility(
-                  'The image seems to be a little shaky, try stabilizing your phone!',
-                );
-              } else if (value >= 0.15) {
-                AccessibilityInfo.announceForAccessibility(
-                  'The image seems to be really shaky, try stabilizing your phone!',
-                );
-              }
-
-              break;
-            default:
-              break;
-          }
+        // case - live feedback
+        if (
+          regionalImageDistortionResult === null &&
+          value > DIST_MAP.get(distortion)[LOW_DIST_IDX]
+        ) {
+          Feedback.giveGlobalFeedback(distortion, flashEnabled);
+          return;
         }
-      } else {
-        const descendingDistortionVectors =
-          regionalImageDistortionResult.getDescendingDistortionVectors();
 
-        for (const distortionVector of descendingDistortionVectors) {
-          const [distortion, vector]: [string, RegionalImageDistortionVector] =
-            distortionVector;
-          const rotatedDirection: RegionalImageDistortionDirection =
-            ORIENTATION_REMAP[vector.direction];
-
-          switch (distortion) {
-            case 'blurryVector':
-              if (vector.magnitude >= 0.6) {
-                AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.blurry[rotatedDirection].high,
-                );
-              } else if (vector.magnitude >= 0.4) {
-                AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.blurry[rotatedDirection].low,
-                );
-              }
-
-              break;
-            case 'brightVector':
-              if (vector.magnitude > 0.4) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.bright[rotatedDirection].hflash,
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.bright[rotatedDirection].high,
-                  );
-                }
-              } else if (vector.magnitude >= 0.18) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.bright[rotatedDirection].lflash,
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.bright[rotatedDirection].low,
-                  );
-                }
-              }
-
-              break;
-            case 'darkVector':
-              if (vector.magnitude > 0.5) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.dark[rotatedDirection].hflash,
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.dark[rotatedDirection].high,
-                  );
-                }
-              } else if (vector.magnitude >= 0.15) {
-                if (flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.dark[rotatedDirection].lflash,
-                  );
-                } else {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.dark[rotatedDirection].low,
-                  );
-                }
-              }
-
-              break;
-            case 'grainyVector':
-              if (vector.magnitude >= 0.6) {
-                AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.grainy[rotatedDirection].high,
-                );
-
-                if (!flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    FEEDBACK.grainy[rotatedDirection].high,
-                  );
-                }
-              } else if (vector.magnitude >= 0.4) {
-                AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.grainy[rotatedDirection].low,
-                );
-
-                if (!flashEnabled) {
-                  AccessibilityInfo.announceForAccessibility(
-                    'Try turning on flash.',
-                  );
-                }
-              }
-
-              break;
-            case 'shakyVector':
-              if (vector.magnitude >= 0.4) {
-                AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.shaky[rotatedDirection].high,
-                );
-              } else if (vector.magnitude >= 0.15) {
-                AccessibilityInfo.announceForAccessibility(
-                  FEEDBACK.shaky[rotatedDirection].low,
-                );
-              }
-
-              break;
-            default:
-              break;
+        // Check if distortion is greater than low threshold
+        if (value > DIST_MAP.get(distortion)[LOW_DIST_IDX]) {
+          dist_detected = true;
+          // Check if distortion is greater than high threshold
+          if (value > DIST_MAP.get(distortion)[HIGH_DIST_IDX]) {
+            // DO GLOBAL FEEDBACK
+            Feedback.giveGlobalFeedback(distortion, flashEnabled);
+          } else {
+            // DO REGIONAL FEEDBACK
+            console.log('REGIONAL');
+            Feedback.giveRegionalFeedback(
+              distortion,
+              flashEnabled,
+              regionalImageDistortionResult,
+            );
           }
+          break;
         }
       }
+      if (!dist_detected) {
+        AccessibilityInfo.announceForAccessibility('Image looks good!');
+        return;
+      }
+    }
+  }
+
+  static giveGlobalFeedback(distortion: String, flashEnabled: boolean) {
+    switch (distortion) {
+      case 'dark':
+        if (flashEnabled) {
+          AccessibilityInfo.announceForAccessibility(
+            'The image is really dark, try turning on flash!',
+          );
+        } else {
+          AccessibilityInfo.announceForAccessibility(
+            'The image is really dark. Try increasing background lighting or checking that something isn’t covering the lens!',
+          );
+        }
+        break;
+      case 'bright':
+        if (flashEnabled) {
+          AccessibilityInfo.announceForAccessibility(
+            'Image is really bright, try turning off flash!',
+          );
+        } else {
+          AccessibilityInfo.announceForAccessibility(
+            'Image is really bright, try decreasing the background lighting!',
+          );
+        }
+        break;
+      case 'blurry':
+        AccessibilityInfo.announceForAccessibility(
+          'The image is blurry, try either stabilizing your phone or stepping away from the object!',
+        );
+        break;
+      case 'grainy':
+        AccessibilityInfo.announceForAccessibility(
+          'The image is grainy, try turning on your flash or increasing background lighting!',
+        );
+        break;
+      case 'shaky':
+        AccessibilityInfo.announceForAccessibility(
+          'The image seems to be a little shaky, try stabilizing your phone!',
+        );
+        break;
+    }
+  }
+
+  static giveRegionalFeedback(
+    distortion: String,
+    flashEnabled: boolean,
+    regionalResult: RegionalImageDistortionResult | null,
+  ) {
+    console.log('REGIONAL FEEDBACK FUNC');
+    if (regionalResult === null) {
+      return;
+    }
+
+    let maxDistortionVal = 0;
+    let maxDistortionIdx = -1;
+    let currentIdx = 0;
+    for (const elem of regionalResult.imageDistortionResults) {
+      for (const patch of elem) {
+        console.log(patch);
+        console.log(patch[distortion]);
+        if (patch[distortion] > maxDistortionVal) {
+          maxDistortionVal = patch[distortion];
+          maxDistortionIdx = currentIdx;
+        }
+        currentIdx++;
+      }
+    }
+    switch (maxDistortionIdx) {
+      case 0:
+        // top right
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in top right'),
+        );
+        break;
+      case 1:
+        // right
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in right'),
+        );
+        break;
+      case 2:
+        // bottom right
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in bottom right'),
+        );
+        break;
+      case 3:
+        // top
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in top'),
+        );
+        break;
+      case 4:
+        // center
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in center'),
+        );
+        break;
+      case 5:
+        // bottom
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in bottom'),
+        );
+        break;
+      case 6:
+        // top left
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in top left'),
+        );
+        break;
+      case 7:
+        // left
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in left'),
+        );
+        break;
+      case 8:
+        // bottom left
+        AccessibilityInfo.announceForAccessibility(
+          distortion.concat(' detected in bottom left'),
+        );
+        break;
     }
   }
 }

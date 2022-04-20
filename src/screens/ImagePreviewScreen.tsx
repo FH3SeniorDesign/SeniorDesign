@@ -3,7 +3,6 @@ import CameraRoll from '@react-native-community/cameraroll';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {RegionalImageDistortionResult} from 'models/RegionalImageDistortionResult';
-import {RegionalImageDistortionVector} from 'models/RegionalImageDistortionVector';
 import {ImageProcessor} from 'processors/ImageProcessor';
 import * as React from 'react';
 import {useEffect, useMemo} from 'react';
@@ -31,21 +30,23 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
 
   const evaluateImage = async () => {
     console.log('# evaluteImage');
+    console.log('#### FLASH ENABLED\t', FlashEnabled); /// <----------- SEE if this works
 
     // Global image evaluation
     const imageDistortionResult: ImageDistortionResult =
       await ImageProcessor.evaluateGlobal(uri);
-    const descendingDistortions: [string, number][] =
-      imageDistortionResult.getDescendingDistortions();
 
-    console.log(
-      'imageDistortionResult:',
-      JSON.stringify(imageDistortionResult),
-    );
-    console.log(
-      'descendingDistortions:',
-      JSON.stringify(descendingDistortions),
-    );
+    // const descendingDistortions: [string, number][] =
+    //   imageDistortionResult.getDescendingDistortions();
+
+    // console.log(
+    //   'imageDistortionResult:',
+    //   JSON.stringify(imageDistortionResult),
+    // );
+    // console.log(
+    //   'descendingDistortions:',
+    //   JSON.stringify(descendingDistortions),
+    // );
     console.log('GLOBAL DONE\n\n');
 
     // Regional image evaluation
@@ -55,20 +56,22 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
         photoFile.width,
         photoFile.height,
       );
-    const descendingDistortionVectors: [
-      string,
-      RegionalImageDistortionVector,
-    ][] = regionalImageDistortionResult.getDescendingDistortionVectors();
+    // const descendingDistortionVectors: [
+    //   string,
+    //   RegionalImageDistortionVector,
+    // ][] = regionalImageDistortionResult.getDescendingDistortionVectors();
 
-    console.log(
-      'regionalImageDistortionResult:',
-      JSON.stringify(regionalImageDistortionResult),
-    );
-    console.log(
-      'descendingDistortionVectors:',
-      JSON.stringify(descendingDistortionVectors),
-    );
+    //console.log(
+    //  'regionalImageDistortionResult:',
+    //  JSON.stringify(regionalImageDistortionResult),
+    //);
+    // console.log(
+    //   'descendingDistortionVectors:',
+    //   JSON.stringify(descendingDistortionVectors),
+    // );
     console.log('REGIONAL DONE\n\n');
+
+    console.log(flashEnabled);
 
     // TODO provide feedback
     Feedback.voiceFeedback(
