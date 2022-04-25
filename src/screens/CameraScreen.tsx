@@ -189,7 +189,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
       <View style={styles.rightButtonRow}>
         {supportsCameraFlipping && (
           <TouchableOpacity
-            accessibilityLabel={`Camera is ${cameraPosition} facing. Tap to make ${
+            accessibilityLabel={`Camera is ${cameraPosition} facing. Double tap to make ${
               cameraPosition === 'front' ? 'back' : 'front'
             } facing.`}
             style={styles.button}
@@ -199,7 +199,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
         )}
         {supportsFlash && (
           <TouchableOpacity
-            accessibilityLabel={`Flash button is ${flash}. Tap to turn ${
+            accessibilityLabel={`Flash button is ${flash}. Double tap to turn ${
               flash === 'on' ? 'off' : 'on'
             }`}
             style={styles.button}
