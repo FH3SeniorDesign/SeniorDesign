@@ -104,7 +104,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
           ) {
             console.log(asset.uri);
             navigation.navigate('LibraryImageScreen', {
-              asset: asset,
+              imagePickerResult: asset,
             });
           }
         }

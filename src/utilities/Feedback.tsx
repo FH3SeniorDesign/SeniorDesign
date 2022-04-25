@@ -58,7 +58,7 @@ const ORIENTATION_REMAP: {
   'bottom-left': 'top-left',
   bottom: 'left',
   'bottom-right': 'bottom-left',
-};
+};*/
 
 const FEEDBACK = {
   blurry: {
@@ -79,8 +79,8 @@ const FEEDBACK = {
       high: 'The image is blurry in the left region, try centering object in screen',
     },
     center: {
-      low: 'Center of image is a bit blurry, wait for autofocus.',
-      high: 'Center of the image is extremely blurry, the object may be moving',
+      low: 'The center of image is a bit blurry, wait for autofocus.',
+      high: 'The center of the image is extremely blurry, please steady the device.',
     },
     right: {
       low: 'The image is blurry in the right region, try centering object in screen',
@@ -101,72 +101,72 @@ const FEEDBACK = {
   },
   bright: {
     'top-left': {
-      low: 'There may be a glare at the top-left region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the top-left region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the top-left region of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the top-left region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the top-left region of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the top-left region of the screen, try turning off the flash',
     },
     top: {
-      low: 'There may be a glare at the top region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the top region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the top region of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the top region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the top region of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the top region of the screen, try turning off the flash',
     },
     'top-right': {
-      low: 'There may be a glare at the top-right region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the top-right region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the top-right region of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the top-right region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the top-right region of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the top-right region of the screen, try turning off the flash',
     },
     left: {
-      low: 'There may be a glare at the left region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the left region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the left region of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the left region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the left region of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the left region of the screen, try turning off the flash',
     },
     center: {
-      low: 'There may be a glare at the center of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the center of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the center of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the center of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the center of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the center of the screen, try turning off the flash',
     },
     right: {
-      low: 'There may be a glare at the right region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the right region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the right region of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the right region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the right region of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the right region of the screen, try turning off the flash',
     },
     'bottom-left': {
-      low: 'There may be a glare at the bottom-left region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the bottom-left region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the bottom-left region of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the bottom-left region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the bottom-left region of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the bottom-left region of the screen, try turning off the flash',
     },
     bottom: {
-      low: 'There may be a glare at the bottom region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the bottom region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the bottom region of the screen, try decreasing lighting in the image',
+      high: 'There may be a glare at the bottom region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the bottom region of the screen, try turning off the flash',
       hflash:
         'There may be a glare at the bottom region of the screen, try turning off the flash',
     },
     'bottom-right': {
-      low: 'There may be a glare at the bottom-right region of the screen, try adjusting background lighting',
-      high: 'There may be a glare at the bottom-right region of the screen, try adjusting background lighting',
+      low: 'There may be a glare at the bottom-right region of the screen, try decreasing lighting in the imageg',
+      high: 'There may be a glare at the bottom-right region of the screen, try decreasing lighting in the image',
       lflash:
         'There may be a glare at the bottom-right region of the screen, try turning off the flash',
       hflash:
@@ -175,87 +175,79 @@ const FEEDBACK = {
   },
   dark: {
     'top-left': {
-      low: 'The top-left region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The top-left of the image is dark, something may be covering the lens',
+      low: 'The top-left region of the image is a bit dark, try turning on your flash',
+      high: 'The top-left region of the image is really dark, try turning on your flash',
       lflash:
-        'The top-left region of the image is a bit dark, try turning on your flash',
+        'The top-left region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The top-left region of the image is a really dark, try turning on your flash',
+        'The top-left region of the image is a really dark, something may be covering the lens',
     },
     top: {
-      low: 'The top region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The top of the image is dark, something may be covering the lens',
+      low: 'The top region of the image is a bit dark, try turning on your flash',
+      high: 'The top region of the image is really dark, try turning on your flash',
       lflash:
-        'The top region of the image is a bit dark, try turning on your flash',
+        'The top region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The top region of the image is a really dark, try turning on your flash',
+        'The top region of the image is a really dark, something may be covering the lens',
     },
     'top-right': {
-      low: 'The top-right region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The top-right of the image is dark, something may be covering the lens',
+      low: 'The top-right region of the image is a bit dark, try turning on your flash',
+      high: 'The top-right region of the image is really dark, try turning on your flash',
       lflash:
-        'The top-right region of the image is a bit dark, try turning on your flash',
+        'The top-right region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The top-right region of the image is a really dark, try turning on your flash',
+        'The top-right region of the image is a really dark, something may be covering the lens',
     },
     left: {
-      low: 'The left region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The left of the image is dark, something may be covering the lens',
+      low: 'The left region of the image is a bit dark, try turning on your flash',
+      high: 'The left region of the image is really dark, try turning on your flash',
       lflash:
-        'The left region of the image is a bit dark, try turning on your flash',
+        'The left region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The left region of the image is a really dark, try turning on your flash',
+        'The left region of the image is a really dark, something may be covering the lens',
     },
     center: {
-      low: 'The center region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The center of the image is dark, something may be covering the lens',
+      low: 'The center region of the image is a bit dark, try turning on your flash',
+      high: 'The center region of the image is really dark, try turning on your flash',
       lflash:
-        'The center of the image is a bit dark, try turning on your flash',
+        'The center region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The center of the image is a really dark, try turning on your flash',
+        'The center region of the image is a really dark, something may be covering the lens',
     },
     right: {
-      low: 'The right region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The right of the image is dark, something may be covering the lens',
+      low: 'The right region of the image is a bit dark, try turning on your flash',
+      high: 'The right region of the image is really dark, try turning on your flash',
       lflash:
-        'The right region of the image is a bit dark, try turning on your flash',
+        'The right region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The right region of the image is a really dark, try turning on your flash',
+        'The right region of the image is a really dark, something may be covering the lens',
     },
     'bottom-left': {
-      low: 'The bottom-left region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The bottom-left of the image is dark, something may be covering the lens',
+      low: 'The bottom-left region of the image is a bit dark, try turning on your flash',
+      high: 'The bottom-left region of the image is really dark, try turning on your flash',
       lflash:
-        'The bottom-left region of the image is a bit dark, try turning on your flash',
+        'The bottom-left region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The bottom-left region of the image is a really dark, try turning on your flash',
+        'The bottom-left region of the image is a really dark, something may be covering the lens',
     },
     bottom: {
-      low: 'The bottom region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The bottom of the image is dark, something may be covering the lens',
+      low: 'The bottom region of the image is a bit dark, try turning on your flash',
+      high: 'The bottom region of the image is really dark, try turning on your flash',
       lflash:
-        'The bottom region of the image is a bit dark, try turning on your flash',
+        'The bottom region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The bottom region of the image is a really dark, try turning on your flash',
+        'The bottom region of the image is a really dark, something may be covering the lens',
     },
     'bottom-right': {
-      low: 'The bottom-right region of the image is a bit dark, there may be a problem with exposure',
-      high: 'The bottom-right of the image is dark, something may be covering the lens',
+      low: 'The bottom-right region of the image is a bit dark, try turning on your flash',
+      high: 'The bottom-right region of the image is really dark, try turning on your flash',
       lflash:
-        'The bottom-right region of the image is a bit dark, try turning on your flash',
+        'The bottom-right region of the image is a bit dark, there may be a problem with exposure',
       hflash:
-        'The bottom-right region of the image is a really dark, try turning on your flash',
+        'The bottom-right region of the image is a really dark, something may be covering the lens',
     },
   },
-  grainy: {
-    overall: {
-      low: 'The image is a bit grainy, try increasing background lighting',
-      high: 'The image is very grainy, try increasing background lighting',
-      lflash: 'The image is a bit grainy, try turning off your flash',
-      hflash: 'The image is very grainy, try turning off your flash',
-    },
-  },
-};*/
+};
 
 let DIST_MAP = new Map();
 let LOW_DIST_IDX = 0;
@@ -274,9 +266,11 @@ export class Feedback {
 
     DIST_MAP.set('dark', [0.15, 0.45]);
     DIST_MAP.set('blurry', [0.4, 0.6]);
+    // no range denotes only global feedback is given for grainy distortion
     DIST_MAP.set('grainy', [0.1875, 0.1875]);
     DIST_MAP.set('bright', [0.3, 0.45]);
-    DIST_MAP.set('shaky', [0.25, 0.4]);
+    // no range denotes only global feedback is given for shaky distortion
+    DIST_MAP.set('shaky', [0.325, 0.325]);
     console.log(flashEnabled);
     if (deltaT >= timeDelayMS) {
       prevTime = new Date();
@@ -333,40 +327,46 @@ export class Feedback {
   static giveGlobalFeedback(distortion: String, flashEnabled: boolean) {
     switch (distortion) {
       case 'dark':
-        if (flashEnabled) {
+        if (!flashEnabled) {
           AccessibilityInfo.announceForAccessibility(
             'The image is really dark, try turning on flash!',
           );
         } else {
           AccessibilityInfo.announceForAccessibility(
-            'The image is really dark. Try increasing background lighting or checking that something isn’t covering the lens!',
+            'The image is really dark, try increasing lighting on object of interest or checking that something isn’t covering the lens!',
           );
         }
         break;
       case 'bright':
         if (flashEnabled) {
           AccessibilityInfo.announceForAccessibility(
-            'Image is really bright, try turning off flash!',
+            'The image is really bright, try turning off flash!',
           );
         } else {
           AccessibilityInfo.announceForAccessibility(
-            'Image is really bright, try decreasing the background lighting!',
+            'The image is really bright, try decreasing the lighting on object of interest!',
           );
         }
         break;
       case 'blurry':
         AccessibilityInfo.announceForAccessibility(
-          'The image is blurry, try either stabilizing your phone or stepping away from the object!',
+          'The image is really blurry, try either stabilizing your phone or taking a step away from the object of interest!',
         );
         break;
       case 'grainy':
-        AccessibilityInfo.announceForAccessibility(
-          'The image is grainy, try turning on your flash or increasing background lighting!',
-        );
+        if (flashEnabled) {
+          AccessibilityInfo.announceForAccessibility(
+            'The image is really grainy, try increasing lighting in photo!',
+          );
+        } else {
+          AccessibilityInfo.announceForAccessibility(
+            'The image is really grainy, try turning on your flash!',
+          );
+        }
         break;
       case 'shaky':
         AccessibilityInfo.announceForAccessibility(
-          'The image seems to be a little shaky, try stabilizing your phone!',
+          'The image is really shaky, try stabilizing your phone!',
         );
         break;
     }
@@ -396,59 +396,85 @@ export class Feedback {
         currentIdx++;
       }
     }
+
+    let range = '';
+    // find range of local distortion and store make note of if flash is on or not (for later use in feedback reporting)
+    // treat any value between high and low range to be low category
+    if (flashEnabled) {
+      if (maxDistortionVal > DIST_MAP.get(distortion)[HIGH_DIST_IDX]) {
+        range = 'hflash';
+        // blurry doesn't have flash fields so override, regardless of flashEnabled status
+        if (distortion === 'blurry') {
+          range = 'high';
+        }
+      } else {
+        range = 'lflash';
+        // blurry doesn't have flash fields so override, regardless of flashEnabled status
+        if (distortion === 'blurry') {
+          range = 'low';
+        }
+      }
+    } else {
+      if (maxDistortionVal > DIST_MAP.get(distortion)[HIGH_DIST_IDX]) {
+        range = 'high';
+      } else {
+        range = 'low';
+      }
+    }
+
     switch (maxDistortionIdx) {
       case 0:
         // top right
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in top right'),
+          FEEDBACK[distortion]['top-right'][range],
         );
         break;
       case 1:
         // right
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in right'),
+          FEEDBACK[distortion].right[range],
         );
         break;
       case 2:
         // bottom right
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in bottom right'),
+          FEEDBACK[distortion]['bottom-right'][range],
         );
         break;
       case 3:
         // top
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in top'),
+          FEEDBACK[distortion].top[range],
         );
         break;
       case 4:
         // center
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in center'),
+          FEEDBACK[distortion].center[range],
         );
         break;
       case 5:
         // bottom
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in bottom'),
+          FEEDBACK[distortion].bottom[range],
         );
         break;
       case 6:
         // top left
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in top left'),
+          FEEDBACK[distortion]['top-left'][range],
         );
         break;
       case 7:
         // left
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in left'),
+          FEEDBACK[distortion].left[range],
         );
         break;
       case 8:
         // bottom left
         AccessibilityInfo.announceForAccessibility(
-          distortion.concat(' detected in bottom left'),
+          FEEDBACK[distortion]['bottom-left'][range],
         );
         break;
     }
