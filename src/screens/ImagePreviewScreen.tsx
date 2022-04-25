@@ -32,7 +32,7 @@ export const ImagePreviewScreen = ({navigation, route}: Props): JSX.Element => {
     return {uri};
   }, [uri]);
 
-  const evaluateImage = async () => {k
+  const evaluateImage = async () => {
     console.log('# evaluteImage');
 
     // Global image evaluation

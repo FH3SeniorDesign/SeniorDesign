@@ -5,7 +5,14 @@ import {ImageDistortionResult} from 'models/ImageDistortionResult';
 import {scanImage} from 'processors/FrameProcessors';
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Dimensions, StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   Asset,
   ImagePickerResponse,
@@ -97,7 +104,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
           ) {
             console.log(asset.uri);
             navigation.navigate('LibraryImageScreen', {
-              imagePickerResult: asset,
+              asset: asset,
             });
           }
         }
@@ -158,7 +165,7 @@ export const CameraScreen = ({navigation}: Props): JSX.Element => {
     <SafeAreaView style={styles.container} accessibilityLabel="Camera Screen">
       <View style={StyleSheet.absoluteFill}>
         <View style={{marginTop: '30%'}}>
-          <View style={{height: Dimensions.get('window').width * 4 / 3}}>
+          <View style={{height: (Dimensions.get('window').width * 4) / 3}}>
             <Camera
               ref={cameraRef}
               style={StyleSheet.absoluteFill}
